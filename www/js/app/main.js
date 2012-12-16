@@ -22,12 +22,12 @@ define(function(require) {
       };
     }
 
-    var paintMosaic = biasedCoin(0.3);
+    var paintMosaic = biasedCoin(0.20);
 
     function dimensions () {
       var w = win.width(),
           h = win.height(),
-          side = 13,
+          side = 12,
           gap = 2,
           cols = Math.floor(w / side),
           rows = Math.floor(h / side);
@@ -42,19 +42,19 @@ define(function(require) {
     }
 
     function update() {
-      console.log('update');
       var d = dimensions(), grid = [];
 
-      grid = _.reduce(_.range(0, d.cols), function (grid, colIndex) {
-        var col = _.reduce(_.range(0, d.rows), function (col, rowIndex, index, list) {
+      grid = _.reduce(_.range(0, d.cols), function (grid, colIndex, colIndex2, cols) {
+        var col = _.reduce(_.range(0, d.rows), function (col, rowIndex, rowIndex2, rows) {
           var tile = {
             left: colIndex * d.side,
             top: rowIndex * d.side,
             paint: paintMosaic()
-          };
+          }, oddsForJubilee;
           if (tile.paint) {
             // from picadilly to jubilee, so the odds are for jubilee
-            tile.color = biasedCoin(colIndex / (list.length - 1))() ? picadilly : jubilee;
+            oddsForJubilee = colIndex / (cols.length - 1);
+            tile.color = biasedCoin(oddsForJubilee)() ? jubilee : picadilly;
           }
           col.push(tile);
           return col;
