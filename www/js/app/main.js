@@ -81,6 +81,6 @@ define(function(require) {
 
     $(function () {
       update();
-      win.resize(update);
+      win.resize(_.debounce(update, 500));
     });
 });
