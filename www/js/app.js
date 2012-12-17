@@ -11,6 +11,9 @@
     shim: {
       'underscore': {
         exports: '_'
+      },
+      'modernizr': {
+        exports: 'Modernizr'
       }
     }
   });
