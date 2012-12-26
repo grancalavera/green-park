@@ -12,8 +12,14 @@
       'underscore': {
         exports: '_'
       },
+      // http://modernizr.com/docs/#installing
+      // If you don't support IE8 and don't need to worry about FOUC,
+      // feel free to include modernizr.js whereever.
       'modernizr': {
         exports: 'Modernizr'
+      },
+      'handlebars': {
+        exports: 'Handlebars'
       }
     }
   });
