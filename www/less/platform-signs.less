@@ -1,17 +1,70 @@
 @signFontSize:@baseFontSize * 2.25;
-@singXHeight:@signFontSize * 0.4;
+@singXHeight:@signFontSize * 0.2;
+@lineColorHeight: 10px;
 
 @signSidePadding:@singXHeight * 2.5;
 @signBottomPadding:@singXHeight * 1.5;
 
+@arrowSize:       30px;
+@arrowUp:         0px;
+@arrowUpRight:    @arrowSize * -1;
+@arrowRight:      @arrowSize * -2;
+@arrowDownRight:  @arrowSize * -3;
+@arrowDown:       @arrowSize * -4;
+@arrowDownLeft:   @arrowSize * -5;
+@arrowLeft:       @arrowSize * -6;
+@arrowUpLeft:     @arrowSize * -7;
+
 .platform {
-  .jubilee, .picadilly {
-    width:100%;
-    height:15px;
-  }
-  h2 {
-    padding: 0 @signSidePadding @signBottomPadding;
-  }
+
+  width: 300px;
   display:inline-block;
   background-color:@white;
+  cursor: pointer;
+
+  .box-shadow(1px 1px 5px fade(@undDarkGray, 70%));
+
+  h2 {
+    padding: 0 @signSidePadding @signBottomPadding;
+    color: @directionalLetteringColor;
+  }
+
+  .jubilee, .picadilly {
+    width:100%;
+    height:@lineColorHeight;
+  }
+  .jubilee {
+    background-color:@jubileeColor;
+  }
+  .picadilly {
+    background-color:@picadillyColor;
+  }
+
+  .arrow {
+    display:inline-block;
+    position:relative;
+    bottom: -4px;
+    .square(@arrowSize);
+    background: url("../img/underground-arrows.svg") transparent no-repeat;
+  }
+
+  &:hover {
+    .box-shadow(1px 1px 10px fade(@undDarkGray, 90%));
+    background-color: lighten(@white, 5%);
+  }
+
+  &.left {
+    .arrow {
+      margin-right:10px;
+      background-position: @arrowLeft 0;
+    }
+  }
+
+  &.right {
+    text-align: right;
+    .arrow {
+      margin-left:10px;
+      background-position: @arrowRight 0;
+    }
+  }
 }
