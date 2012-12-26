@@ -12,13 +12,15 @@
       "underscore": "github:documentcloud/underscore/1.4.3",
       "Modernizr": "github:Modernizr/Modernizr/v2.6.2",
       "text": "github:requirejs/text/2.0.3",
-      "Handlebars": "https://github.com/downloads/wycats/handlebars.js/handlebars-1.0.rc.1.js"
+      "Handlebars": "https://github.com/downloads/wycats/handlebars.js/handlebars-1.0.rc.1.js",
+      "bootstrap": "github:twitter/bootstrap/v2.2.2"
     }
   },
   "devDependencies": {
     "grunt-volo": "~0.0.1",
     "grunt-contrib-less": "~0.3.2",
     "grunt-reload": "~0.2.0",
-    "grunt": "~0.3.17"
+    "grunt": "~0.3.17",
+    "grunt-html": "~0.3.1"
   }
 }

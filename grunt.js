@@ -24,7 +24,7 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['<config:lint.files>', 'www/less/**/*.less', 'www/index.html'],
+      files: ['<config:lint.files>', 'www/less/**/*.less', 'www/**/*.html'],
       tasks: 'lint less reload'
     },
     server: {
@@ -57,11 +57,15 @@ module.exports = function(grunt) {
         require: true,
         requirejs: true
       }
+    },
+    htmllint: {
+        all: ["www/index.html"]
     }
   });
 
   grunt.loadNpmTasks('grunt-volo');
   grunt.loadNpmTasks('grunt-reload');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-html');
   grunt.registerTask('default', 'server lint less reload watch');
 };
