@@ -1,0 +1,17 @@
+@signFontSize:@baseFontSize * 2.25;
+@singXHeight:@signFontSize * 0.4;
+
+@signSidePadding:@singXHeight * 2.5;
+@signBottomPadding:@singXHeight * 1.5;
+
+.platform {
+  .jubilee, .picadilly {
+    width:100%;
+    height:15px;
+  }
+  h2 {
+    padding: 0 @signSidePadding @signBottomPadding;
+  }
+  display:inline-block;
+  background-color:@white;
+}

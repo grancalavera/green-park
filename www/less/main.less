@@ -1,38 +1,19 @@
 @import "../js/lib/bootstrap/less/bootstrap.less";
-
-// Application variables
-@theBackground:rgb(185, 183, 174);
-@picadillyColor:rgb(33, 23, 102);
-@jubileeColor:rgb(85, 87, 71);
-@blankTile:#e1e0d5;
-@headerTileSize:40px;
-
-// Bootstrap overrides
-@baseFontFamily:Lato, sans-serif;
-@bodyBackground:@theBackground;
-@textColor: @jubileeColor;
-@heroUnitBackground:@theBackground;
-
-
-.page-header {
-  border-bottom:none;
-}
-
-// Application styles
+@import "variables.less";
+@import "bootstrap-overrides.less";
+@import "sticky-footer.less";
+@import "platform-signs.less";
 
 body {
-  font-weight:400;
+  font-weight:300;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight:100;
+  font-weight:400;
 }
 
-#footer {
-  background-color: @blankTile;
-}
 .tile {
-  background-color: @blankTile;
+  background-color: @white;
   .border-radius(1px);
 }
 
@@ -40,7 +21,11 @@ h1, h2, h3, h4, h5, h6 {
   // position:absolute;
 }
 
-.lead .tile {
+.strip {
+  margin-bottom: 11px;
+}
+
+.strip .tile {
   margin-left: 4px;
   .square(@headerTileSize);
   display:inline-block;
