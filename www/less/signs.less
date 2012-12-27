@@ -1,6 +1,6 @@
 @signFontSize:@baseFontSize * 2.25;
 @singXHeight:@signFontSize * 0.2;
-@lineColorHeight: 10px;
+@colorLineHeight: 10px;
 
 @signSidePadding:@singXHeight * 2.5;
 @signBottomPadding:@singXHeight * 1.5;
@@ -15,6 +15,22 @@
 @arrowLeft:       @arrowSize * -6;
 @arrowUpLeft:     @arrowSize * -7;
 
+// Station
+.page-header {
+  text-transform:uppercase;
+  color:@white;
+  background-color:@undDarkBlue;
+  text-align:center;
+  padding-top:(@baseLineHeight / 2) - 3;
+  .undergroundFonts;
+  .signShadow;
+  .signCorners;
+}
+
+.signs {
+  margin-bottom: 200px;
+}
+
 .platform {
 
   width: 300px;
@@ -22,17 +38,17 @@
   background-color:@white;
   cursor: pointer;
 
-  .box-shadow(1px 1px 5px fade(@undDarkGray, 70%));
-
   h2 {
     padding: 0 @signSidePadding @signBottomPadding;
     color: @directionalLetteringColor;
   }
 
-  .jubilee, .picadilly {
+  .station {
+    .stationCorners;
     width:100%;
-    height:@lineColorHeight;
+    height:@colorLineHeight;
   }
+
   .jubilee {
     background-color:@jubileeColor;
   }
@@ -48,8 +64,11 @@
     background: url("../img/underground-arrows.svg") transparent no-repeat;
   }
 
+  .signCorners;
+  .signShadow;
+
   &:hover {
-    .box-shadow(1px 1px 10px fade(@undDarkGray, 90%));
+    .signShadowHover;
     background-color: lighten(@white, 5%);
   }
 

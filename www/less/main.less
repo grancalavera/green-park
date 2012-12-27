@@ -1,8 +1,11 @@
-@import "../js/lib/bootstrap/less/bootstrap.less";
-@import "variables.less";
-@import "bootstrap-overrides.less";
-@import "sticky-footer.less";
-@import "platform-signs.less";
+@import "johnston-underground-bold";
+@import "../js/lib/bootstrap/less/bootstrap";
+@import "variables";
+@import "mixins";
+@import "bootstrap-overrides";
+@import "sticky-footer";
+@import "signs";
+@import "sections";
 
 body {
   font-weight:300;
@@ -12,23 +15,13 @@ h1, h2, h3, h4, h5, h6 {
   font-weight:400;
 }
 
-.page-header {
-  text-transform:uppercase;
-  color:@white;
-  background-color:@undDarkBlue;
-  text-align:center;
-  padding-top:(@baseLineHeight / 2) - 3;
-}
-
 .tile {
   background-color: @white;
   .border-radius(1px);
   position:absolute;
 }
 
-.underground-sign {
-  position: relative;
-  text-align: center;
+#start {
   width: 100%;
-  bottom: 124px;
+  height: 100%:
 }

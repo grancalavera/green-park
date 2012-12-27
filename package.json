@@ -13,7 +13,8 @@
       "Modernizr": "github:Modernizr/Modernizr/v2.6.2",
       "text": "github:requirejs/text/2.0.3",
       "Handlebars": "https://github.com/downloads/wycats/handlebars.js/handlebars-1.0.rc.1.js",
-      "bootstrap": "github:twitter/bootstrap/v2.2.2"
+      "bootstrap": "github:twitter/bootstrap/v2.2.2",
+      "backbone": "github:documentcloud/backbone/0.9.9"
     }
   },
   "devDependencies": {

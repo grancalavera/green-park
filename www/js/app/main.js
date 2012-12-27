@@ -168,14 +168,14 @@ define(function(require) {
     //
     //--------------------------------------------------------------------------
 
-    $(function () {
-      var upd = isTouch() ? updateViewport : update,
-          debUpd = _.debounce(upd, 500),
-          debClr = _.debounce(clear, 500, true);
-      upd();
-      win.resize(function () {
-        debClr();
-        debUpd();
-      });
-    });
+    // $(function () {
+    //   var upd = isTouch() ? updateViewport : update,
+    //       debUpd = _.debounce(upd, 500),
+    //       debClr = _.debounce(clear, 500, true);
+    //   upd();
+    //   win.resize(function () {
+    //     debClr();
+    //     debUpd();
+    //   });
+    // });
 });

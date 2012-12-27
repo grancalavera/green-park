@@ -3,28 +3,30 @@
 <head>
   <meta charset="utf-8">
   <title>Green Park Station</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Green Park">
   <link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="css/main.css">
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <script data-main="js/app.js" src="js/lib/require.js"></script>
 </head>
 <body>
-  <div id="wrap">
+  <div id="start" class="section">
     <div class="container">
       <header class="page-header">
         <h1>Green Park Station</h1>
       </header>
 
-      <section class="lead clearfix">
+      <section class="signs clearfix">
         <div class="platform left pull-left">
-          <div class="picadilly"></div>
+          <div class="picadilly station"></div>
           <h2><span class="arrow"></span>Picadilly line</h2>
         </div>
 
         <div class="platform right pull-right">
-          <div class="jubilee"></div>
+          <div class="jubilee station"></div>
           <h2>Jubilee line<span class="arrow"></span></h2>
         </div>
       </section>
@@ -40,6 +42,7 @@
     </div>
 
     <div id="push"></div>
+
   </div>
   <footer id="footer">
     <div class="container">
