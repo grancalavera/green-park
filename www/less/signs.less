@@ -15,7 +15,6 @@
 @arrowLeft:       @arrowSize * -6;
 @arrowUpLeft:     @arrowSize * -7;
 
-// Station
 .page-header {
   text-transform:uppercase;
   color:@white;
@@ -29,6 +28,13 @@
 
 .signs {
   margin-bottom: 200px;
+  .clearfix;
+  .picadilly {
+    .pull-left;
+  }
+  .jubilee {
+    .pull-right;
+  }
 }
 
 .platform {
@@ -37,53 +43,51 @@
   display:inline-block;
   background-color:@white;
   cursor: pointer;
-
-  h2 {
-    padding: 0 @signSidePadding @signBottomPadding;
-    color: @directionalLetteringColor;
-  }
-
-  .station {
-    .stationCorners;
-    width:100%;
-    height:@colorLineHeight;
-  }
-
-  .jubilee {
-    background-color:@jubileeColor;
-  }
-  .picadilly {
-    background-color:@picadillyColor;
-  }
-
-  .arrow {
-    display:inline-block;
-    position:relative;
-    bottom: -4px;
-    .square(@arrowSize);
-    background: url("../img/underground-arrows.svg") transparent no-repeat;
-  }
-
   .signCorners;
   .signShadow;
 
-  &:hover {
-    .signShadowHover;
-    background-color: lighten(@white, 5%);
+  &.jubilee  {
+    text-align: right;
+    .line {
+      background-color:@jubileeColor;
+    }
+    .arrow {
+      margin-left:10px;
+      background-position: @arrowRight 0;
+    }
   }
 
-  &.left {
+  &.picadilly {
+    .line {
+      background-color:@picadillyColor;
+    }
     .arrow {
       margin-right:10px;
       background-position: @arrowLeft 0;
     }
   }
 
-  &.right {
-    text-align: right;
+  &:hover {
+    .signShadowHover;
+    background-color: lighten(@white, 5%);
+  }
+
+  .line {
+    .lineCorners;
+    width:100%;
+    height:@colorLineHeight;
+  }
+
+  h2 {
+    padding: 0 @signSidePadding @signBottomPadding;
+    color: @directionalLetteringColor;
     .arrow {
-      margin-left:10px;
-      background-position: @arrowRight 0;
+      display:inline-block;
+      position:relative;
+      bottom: -4px;
+      .square(@arrowSize);
+      background: url("../img/underground-arrows.svg") transparent no-repeat;
     }
   }
 }
+

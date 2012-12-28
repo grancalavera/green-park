@@ -9,6 +9,10 @@
     },
     // http://requirejs.org/docs/api.html#config-shim
     shim: {
+      'backbone': {
+        exports: 'Backbone',
+        deps: ['underscore', 'jquery']
+      },
       'underscore': {
         exports: '_'
       },
