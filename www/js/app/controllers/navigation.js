@@ -28,4 +28,8 @@ define(function (require) {
         currentSection.walkTo();
       }
     });
+
+    setTimeout(function () {
+      currentSection.showPlatforms();
+    }, 500);
 });

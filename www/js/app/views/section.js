@@ -35,6 +35,7 @@ define(function (require) {
         'click .platform.picadilly': 'picadilly_clickHandler',
         'click .platform.jubilee': 'jubilee_clickHandler'
       },
+
       //----------------------------------
       //
       // Animations
@@ -48,6 +49,10 @@ define(function (require) {
         }
         this.$el.css('transform', 'translateX(' + howMuch + 'px)');
       },
+      showPlatforms: function () {
+        this.$('.platform').css('opacity', 1);
+      },
+
       //----------------------------------
       //
       // Walking
@@ -66,6 +71,7 @@ define(function (require) {
             this.translate(0, true);
         }
       },
+
       //----------------------------------
       //
       // Event handlers
