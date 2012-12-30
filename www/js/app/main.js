@@ -17,12 +17,7 @@ define(function(require) {
     //
     //--------------------------------------------------------------------------
 
-    var Start = require('app/views/start');
-    var start = new Start({el: '#start'});
-    start.on('walkto', function (event) {
-      console.log('walk to: ', event.platform);
-      $(start.el).css('left', 1280);
-    });
+    var navigation = require('app/controllers/navigation');
 
     //--------------------------------------------------------------------------
     //

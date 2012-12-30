@@ -21,3 +21,11 @@
   .border-top-right-radius(@signRad);
   .border-top-left-radius(@signRad);
 }
+
+.transitionTransform(@transform) {
+  .transition(-webkit-transform @transform);
+  .transition(   -moz-transform @transform);
+  .transition(    -ms-transform @transform);
+  .transition(     -o-transform @transform);
+  .transition(        transform @transform);
+}
