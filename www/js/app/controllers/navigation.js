@@ -11,7 +11,9 @@ define(function (require) {
     var $ = require('jquery');
     var win = $(window);
     var Section = require('app/views/section');
-    var currentSection = new Section({el: '#start'});
+    var Tunnel = require('app/views/tunnel');
+    var currentSection = new Section();
+    $('body').append(currentSection.render().el);
 
     //----------------------------------
     //

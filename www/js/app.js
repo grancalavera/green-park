@@ -28,5 +28,5 @@
     }
   });
 
-  requirejs(['app/main']);
+  requirejs(['app/greenpark']);
 })();

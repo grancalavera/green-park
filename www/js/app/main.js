@@ -17,7 +17,7 @@ define(function(require) {
     //
     //--------------------------------------------------------------------------
 
-    var navigation = require('app/controllers/navigation');
+    // var navigation = require('app/controllers/navigation');
 
     //--------------------------------------------------------------------------
     //

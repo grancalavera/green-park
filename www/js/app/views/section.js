@@ -10,15 +10,31 @@ define(function (require) {
     //----------------------------------
     var $ = require('jquery');
     var Backbone = require('backbone');
+    var _ = require('underscore');
+
+    var Handlebars = require('handlebars');
     var win = $(window);
+    var navTemplate = require('text!app/templates/nav.html');
 
     //----------------------------------
     //
-    // Platforms
+    // Helpers
     //
     //----------------------------------
-    var PICADILLY = 1;
-    var JUBILEE = -1;
+
+    var getTemplate = _.memoize(function (sectionTemplate) {
+      return Handlebars.compile(sectionTemplate)({nav: navTemplate});
+    });
+
+    var translate = function ($el, dir, animated) {
+      var distance = win.width() * dir;
+      if (animated) {
+        $el.addClass('animated');
+      } else {
+        $el.removeClass('animated');
+      }
+      $el.css('transform', 'translateX(' + distance + 'px)');
+    };
 
     //----------------------------------
     //
@@ -28,29 +44,24 @@ define(function (require) {
     return Backbone.View.extend({
       //----------------------------------
       //
-      // Backbone stuff
+      // State
       //
       //----------------------------------
-      events: {
-        'click .platform.picadilly': 'picadilly_clickHandler',
-        'click .platform.jubilee': 'jubilee_clickHandler'
-      },
+      template: '',
 
       //----------------------------------
       //
-      // Animations
+      // Backbone stuff
       //
       //----------------------------------
-      translate: function (howMuch, animated) {
-        if (animated) {
-          this.$el.addClass('animated');
-        } else {
-          this.$el.removeClass('animated');
-        }
-        this.$el.css('transform', 'translateX(' + howMuch + 'px)');
+      tagName: 'section',
+      render: function() {
+        this.$el.html(getTemplate(this.template));
+        return this;
       },
+
       showPlatforms: function () {
-        this.$('.platform').css('opacity', 1);
+
       },
 
       //----------------------------------
@@ -58,33 +69,20 @@ define(function (require) {
       // Walking
       //
       //----------------------------------
-      walkTo: function (platform) {
-        var distance = win.width();
-        switch (platform) {
-          case PICADILLY:
-            this.translate(distance * PICADILLY, true);
-            break;
-          case JUBILEE:
-            this.translate(distance * JUBILEE, true);
-            break;
-          default:
-            this.translate(0, true);
-        }
+
+      toPicadilly: function (animated) {
+        console.log('translate toPicadilly');
+        translate(this.$el, -1, animated);
       },
 
-      //----------------------------------
-      //
-      // Event handlers
-      //
-      //----------------------------------
-      triggerWalk: function (platform) {
-        this.trigger('walkto', {platform: platform});
+      toJubilee: function (animated) {
+        console.log('translate toJubilee');
+        translate(this.$el, 1, animated);
       },
-      picadilly_clickHandler: function (event) {
-        this.triggerWalk(PICADILLY);
-      },
-      jubilee_clickHandler: function (event) {
-        this.triggerWalk(JUBILEE);
+
+      toCenter: function (animated) {
+        console.log('translate toCenter');
+        translate(this.$el, 0, animated);
       }
 
     });
