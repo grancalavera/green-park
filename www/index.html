@@ -13,28 +13,40 @@
   <script data-main="js/app.js" src="js/lib/require.js"></script>
 </head>
 <body>
-  <div id="start" class="section">
-    <div class="container">
-      <header class="page-header">
-        <h1>Green Park Station</h1>
-      </header>
 
-      <section class="signs">
+  <section id="start">
+      <div class="container">
+        <header class="page-header">
+          <h1>Green Park Station</h1>
+        </header>
+        <nav>
+          <div class="platform picadilly">
+            <div class="line"></div>
+            <h2><span class="arrow"></span>Picadilly line</h2>
+          </div>
+          <div class="platform jubilee">
+            <div class="line"></div>
+            <h2>Jubilee line<span class="arrow"></span></h2>
+          </div>
+        </nav>
+      </div>
+  </section>
+
+  <!--
+  <section id="right" class="container">
+      <nav>
         <div class="platform picadilly">
           <div class="line"></div>
           <h2><span class="arrow"></span>Picadilly line</h2>
         </div>
-
         <div class="platform jubilee">
           <div class="line"></div>
           <h2>Jubilee line<span class="arrow"></span></h2>
         </div>
-      </section>
-    </div>
+      </nav>
+  </section>
+  -->
 
-    <div id="push"></div>
-
-  </div>
   <footer id="footer">
     <div class="container">
       <p class="muted credit">Fork <a href="https://github.com/grancalavera/green-park">Green Park</a> on GitHub.</p>

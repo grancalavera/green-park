@@ -1,9 +1,9 @@
 @import "johnston-underground-bold";
 @import "../js/lib/bootstrap/less/bootstrap";
+@import "reset";
 @import "variables";
 @import "mixins";
 @import "bootstrap-overrides";
-@import "sticky-footer";
 @import "signs";
 @import "sections";
 
@@ -21,7 +21,29 @@ h1, h2, h3, h4, h5, h6 {
   position:absolute;
 }
 
-#start {
+// There's only 1 footer element used on the site... soo...
+footer {
+  height: 60px;
+  background-color: @white;
+  position: fixed;
+  z-index: 1000;
+  bottom:0;
   width: 100%;
-  height: 100%:
+}
+
+@media (max-width: 767px) {
+  footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.container {
+  width: auto;
+  max-width: 680px;
+}
+.container .credit {
+  margin: 20px 0;
 }
