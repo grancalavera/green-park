@@ -32,11 +32,6 @@ define(function (require) {
     setup: function () {
       this.tunnel = 'app/views/tunnel';
       this.start = 'app/views/start';
-      this.testCenter = function (walk) {
-        ok(!walk.picadilly.$el.hasClass('center'), 'there should be no .center on the left');
-        ok(walk.center.$el.hasClass('center'), 'there should .center at the center');
-        ok(!walk.jubilee.$el.hasClass('center'), 'there should no .center on the right');
-      };
     }
   });
 
@@ -91,26 +86,6 @@ define(function (require) {
     equal(walk.picadilly.toString(), this.tunnel, 'Tunnel on the left');
     equal(walk.center.toString(), this.tunnel, 'Tunnel at the center.');
     equal(walk.jubilee.toString(), this.start, 'Start on the right.');
-  });
-
-  test('center only at the center at start, 3 sections', function () {
-    var walk = start(3);
-    this.testCenter(walk);
-  });
-
-  test('center only at the center, walk to jubilee, 3 sections', function () {
-    var walk = start(3).toJubilee();
-    this.testCenter(walk);
-  });
-
-  test('center only at the center, walk to picadilly, 3 sections', function () {
-    var walk = start(3).toPicadilly();
-    this.testCenter(walk);
-  });
-
-  test('center only at the center, walk to jubilee twice, 3 sections', function () {
-    var walk = start(3).toJubilee().toJubilee();
-    this.testCenter(walk);
   });
 
 });

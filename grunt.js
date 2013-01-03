@@ -85,5 +85,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-html');
-  grunt.registerTask('default', 'server lint less handlebars qunit reload watch');
+  grunt.registerTask('default', 'server lint less handlebars reload qunit watch');
 };

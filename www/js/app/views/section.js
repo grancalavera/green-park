@@ -51,13 +51,20 @@ define(function (require) {
       //
       //----------------------------------
       tagName: 'section',
+      initialize: function () {
+        this.hidePlatforms();
+      },
       render: function() {
         this.$el.html(this.template());
         return this;
       },
 
       showPlatforms: function () {
+        this.$('.platform').fadeIn();
+      },
 
+      hidePlatforms: function () {
+        this.$('.platform').fadeOut();
       },
 
       //----------------------------------

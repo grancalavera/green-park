@@ -72,10 +72,6 @@ define(function (require) {
       walk.center = getSection(pos[1]);
       walk.jubilee = getSection(pos[2]);
 
-      walk.picadilly.$el.removeClass('center');
-      walk.center.$el.addClass('center');
-      walk.jubilee.$el.removeClass('center');
-
       walk.picadilly.toPicadilly();
       walk.center.toCenter();
       walk.jubilee.toJubilee();
@@ -86,6 +82,14 @@ define(function (require) {
       walk.toJubilee = function () {
         return walkToJubilee(walk);
       };
+
+      walk.toString = function () {
+        var str = walk.picadilly.toString() +
+          ' - ' + walk.center.toString() +
+          ' - ' + walk.jubilee.toString();
+        return str;
+      };
+
     };
 
     var start = function () {

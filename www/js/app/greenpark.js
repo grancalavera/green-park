@@ -2,12 +2,15 @@
 // leoncoto@gmail.com
 define(function (require) {
     'use strict';
+
     var $ = require('jquery');
     var Backbone = require('backbone');
     var _ = require('underscore');
-
-    var Start = require('app/views/start');
-    var Tunnel = require('app/views/tunnel');
+    var sections = 10;
+    var transitionEvents = [
+      'transitionend',
+      'webkitTransitionEnd'
+    ].join(' ');
 
     var GreenPark = Backbone.View.extend({
       //----------------------------------
@@ -26,11 +29,14 @@ define(function (require) {
       events: {
         'click .platform.picadilly': 'picadilly_clickHandler',
         'click .platform.jubilee': 'jubilee_clickHandler',
-        'transitionend section.center': 'section_transitionendHandler',
-        'webkitTransitionEnd section.center': 'section_transitionendHandler'
+        'resize': function () {
+          console.log('resize');
+        }
       },
       initialize: function () {
-        this.walk = require('app/walk').start(3);
+        this.walk = require('app/walk').start(sections);
+        this.walk.center.$el.addClass('center');
+        this.appendAll();
       },
 
       //----------------------------------
@@ -38,11 +44,42 @@ define(function (require) {
       // Walking stuff
       //
       //----------------------------------
-
-      // The real issue here is an event firing twice, this is just a hack :(
-      update: _.debounce(function () {
-        this.walk = this.walk[this.whereTo]();
-      }, 100),
+      onTransition: function () {
+        var $el = this.walk.center.$el;
+        $el.on(transitionEvents, _.bind(this.update, this));
+      },
+      offTransition: function () {
+        var $el = this.walk.center.$el;
+        $el.off(transitionEvents);
+      },
+      append: function (view) {
+        var el = view.render().el;
+        this.$el.prepend(el);
+      },
+      appendAll: function () {
+        this.append(this.walk.picadilly);
+        this.append(this.walk.center);
+        this.append(this.walk.jubilee);
+      },
+      update: function () {
+        var oldWalk = this.walk;
+        var walk = this.walk[this.whereTo]();
+        this.offTransition();
+        switch(this.whereTo) {
+          case 'toPicadilly':
+            this.append(walk.picadilly);
+            oldWalk.jubilee.remove();
+            break;
+          case 'toJubilee':
+            this.append(walk.jubilee);
+            oldWalk.picadilly.remove();
+            break;
+        }
+        walk.picadilly.$el.removeClass('center');
+        walk.center.$el.addClass('center');
+        walk.jubilee.$el.removeClass('center');
+        this.walk = walk;
+      },
 
       //----------------------------------
       //
@@ -51,11 +88,13 @@ define(function (require) {
       //----------------------------------
       picadilly_clickHandler: function (event) {
         this.whereTo = 'toPicadilly';
+        this.onTransition();
         this.walk.center.toJubilee(true);
         this.walk.picadilly.toCenter(true);
       },
       jubilee_clickHandler: function (event) {
         this.whereTo = 'toJubilee';
+        this.onTransition();
         this.walk.center.toPicadilly(true);
         this.walk.jubilee.toCenter(true);
       },
