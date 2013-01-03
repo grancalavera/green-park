@@ -11,14 +11,6 @@ define(function (require) {
     var $el = null;
     var sections = [];
 
-    // var getSection = _.memoize(function(index) {
-    //   if (index === 0) {
-    //     return new Start();
-    //   } else {
-    //     return new Tunnel();
-    //   }
-    // });
-
     var getSection = function(index) {
       var section = sections[index];
       if (section) {
@@ -60,7 +52,21 @@ define(function (require) {
     };
 
     var initialize = function (walk) {
-      var pos = getPositions(walk.scrollPos);
+      var pos;
+
+      walk.next = function () {
+        return next(walk.scrollPos);
+      };
+
+      walk.prev = function () {
+        return prev(walk.scrollPos);
+      };
+
+      walk.getPositions = function () {
+        return getPositions(walk.scrollPos);
+      };
+
+      pos = walk.getPositions();
 
       walk.picadilly = getSection(pos[0]);
       walk.center = getSection(pos[1]);
@@ -92,7 +98,7 @@ define(function (require) {
     // Same as 'walk left'
     var walkToJubilee = function(fromWalk) {
       var walk = {};
-      walk.scrollPos = next(fromWalk.scrollPos);
+      walk.scrollPos = fromWalk.next();
       initialize(walk);
       return walk;
     };
@@ -100,7 +106,7 @@ define(function (require) {
     // Same as 'walk right'
     var walkToPicadilly = function(fromWalk) {
       var walk = {};
-      walk.scrollPos = prev(fromWalk.scrollPos);
+      walk.scrollPos = fromWalk.prev();
       initialize(walk);
       return walk;
     };
@@ -114,11 +120,7 @@ define(function (require) {
           sectionCount = 3;
         }
         return start();
-      },
-      next: next,
-      prev: prev,
-      getSection: getSection,
-      getPositions: getPositions
+      }
     };
 
 });
