@@ -54,6 +54,15 @@ define(function (require) {
     var initialize = function (walk) {
       var pos;
 
+      walk.getPositions = function () {
+        return getPositions(walk.scrollPos);
+      };
+
+      pos = walk.getPositions();
+      walk.picadilly = getSection(pos[0]);
+      walk.center = getSection(pos[1]);
+      walk.jubilee = getSection(pos[2]);
+
       walk.next = function () {
         return next(walk.scrollPos);
       };
@@ -62,19 +71,11 @@ define(function (require) {
         return prev(walk.scrollPos);
       };
 
-      walk.getPositions = function () {
-        return getPositions(walk.scrollPos);
+      walk.place = function () {
+        walk.picadilly.toPicadilly();
+        walk.center.toCenter();
+        walk.jubilee.toJubilee();
       };
-
-      pos = walk.getPositions();
-
-      walk.picadilly = getSection(pos[0]);
-      walk.center = getSection(pos[1]);
-      walk.jubilee = getSection(pos[2]);
-
-      walk.picadilly.toPicadilly();
-      walk.center.toCenter();
-      walk.jubilee.toJubilee();
 
       walk.toPicadilly = function () {
         return walkToPicadilly(walk);
@@ -90,6 +91,7 @@ define(function (require) {
         return str;
       };
 
+      walk.place();
     };
 
     var start = function () {

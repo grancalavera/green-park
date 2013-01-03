@@ -3,14 +3,24 @@
 define(function (require) {
     'use strict';
 
+    //----------------------------------
+    //
+    // Module-wide variables
+    //
+    //----------------------------------
+
     var $ = require('jquery');
     var Backbone = require('backbone');
+    var Modernizr = require('modernizr');
     var _ = require('underscore');
     var sections = 10;
     var transitionEvents = [
       'transitionend',
       'webkitTransitionEnd'
     ].join(' ');
+    var isTouch = Modernizr.touch;
+    var $win = $(window);
+    var $doc = $(document);
 
     var GreenPark = Backbone.View.extend({
       //----------------------------------
@@ -28,15 +38,20 @@ define(function (require) {
       el: document.body,
       events: {
         'click .platform.picadilly': 'picadilly_clickHandler',
-        'click .platform.jubilee': 'jubilee_clickHandler',
-        'resize': function () {
-          console.log('resize');
-        }
+        'click .platform.jubilee': 'jubilee_clickHandler'
       },
       initialize: function () {
         this.walk = require('app/walk').start(sections);
         this.walk.center.$el.addClass('center');
         this.appendAll();
+        var updtDim = _.bind(_.debounce(this.updateDimensions, 100), this);
+        if (isTouch) {
+          $win.on('orientationchange', updtDim);
+        } else {
+          $win.on('resize', updtDim);
+        }
+        console.log(Modernizr.mq('(orientation: landscape)'));
+        console.log(Modernizr.mq('(orientation: portrait)'));
       },
 
       //----------------------------------
@@ -79,6 +94,9 @@ define(function (require) {
         walk.center.$el.addClass('center');
         walk.jubilee.$el.removeClass('center');
         this.walk = walk;
+      },
+      updateDimensions: function () {
+        console.log('update dimensions');
       },
 
       //----------------------------------
