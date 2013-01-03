@@ -24,8 +24,8 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['<config:lint.files>', 'www/less/**/*.less', 'www/**/*.html'],
-      tasks: 'lint less reload'
+      files: ['<config:lint.files>', 'www/less/**/*.less', 'www/**/*.html', 'www/js/templates/src/**/*.hbs'],
+      tasks: 'lint less handlebars reload'
     },
     server: {
       port: 8000,
@@ -69,10 +69,10 @@ module.exports = function(grunt) {
         options: {
           processName: function (filename) {
             var pieces = filename.split('/');
-            filename = pieces[pieces.length - 1].replace('.hbs', '');
-            grunt.log.debug(filename);
-            return filename;
+            return pieces[pieces.length - 1].replace('.hbs', '');
           },
+          // Otherwise function calls loose the reference to Handlebars ;)
+          wrapped: true
         },
         files: {
           "www/js/templates/dist/templates.js": "www/js/templates/src/**/*.hbs"

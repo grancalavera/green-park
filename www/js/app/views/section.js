@@ -11,20 +11,13 @@ define(function (require) {
     var $ = require('jquery');
     var Backbone = require('backbone');
     var _ = require('underscore');
-
-    var Handlebars = require('handlebars');
     var win = $(window);
-    var navTemplate = require('text!app/templates/nav.html');
 
     //----------------------------------
     //
     // Helpers
     //
     //----------------------------------
-
-    var getTemplate = _.memoize(function (sectionTemplate) {
-      return Handlebars.compile(sectionTemplate)({nav: navTemplate});
-    });
 
     var translate = function ($el, dir, animated) {
       var distance = win.width() * dir;
@@ -47,7 +40,7 @@ define(function (require) {
       // State
       //
       //----------------------------------
-      template: '',
+      template: function () { return ''; },
 
       //----------------------------------
       //
@@ -56,7 +49,7 @@ define(function (require) {
       //----------------------------------
       tagName: 'section',
       render: function() {
-        this.$el.html(getTemplate(this.template));
+        this.$el.html(this.template());
         return this;
       },
 
