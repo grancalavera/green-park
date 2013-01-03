@@ -11,7 +11,6 @@ define(function (require) {
     var $el = null;
 
     var getSection = _.memoize(function(index) {
-      console.log('creating new section for index ' + index);
       if (index === 0) {
         return new Start();
       } else {
@@ -19,106 +18,102 @@ define(function (require) {
       }
     });
 
+    // var getSection = function(index) {
+    //   var section = sections[index];
+    //   if (section) {
+    //     return section;
+    //   }
+    //   if (index === 0) {
+    //     section = new Start();
+    //   } else {
+    //     section = new Tunnel();
+    //   }
+    //   sections[index] = section;
+    //   return section;
+    // };
+
     var next = function (scrollPos) {
+      scrollPos += 1;
       if (scrollPos < sectionCount) {
-        return scrollPos + 1;
+        return scrollPos;
       } else {
         return 0;
       }
     };
 
     var prev = function (scrollPos) {
-      if (scrollPos === 0) {
-        return sectionCount - 1;
+      scrollPos -= 1;
+      if (scrollPos >= 0) {
+        return scrollPos;
       } else {
-        return scrollPos - 1;
+        return sectionCount - 1;
       }
     };
 
     var append = function (views) {
       views = _.isArray(views) ? views : [views];
-      _.each(views, function (def) {
-        var view = def.view, whereTo = def.whereTo;
-        $el.append(view.render().el);
-        if (whereTo) {
-          view[whereTo]();
-        }
+      _.each(views, function (view) {
+        console.log('prepend:', view);
+        $el.prepend(view.render().el);
       });
+    };
+
+    var initialize = function (walk) {
+      walk.center.$el.addClass('center');
+      walk.picadilly.toPicadilly();
+      walk.center.toCenter();
+      walk.jubilee.toJubilee();
+      walk.toPicadilly = function () {
+        console.log('toPicadilly...');
+        return walkToPicadilly(walk);
+      };
+      walk.toJubilee = function () {
+        console.log('toJubilee...');
+        return walkToJubilee(walk);
+      };
+      console.log('scrollPos',walk.scrollPos);
+      console.log('-');
+    };
+
+    var clean = function (walk, andRemove) {
+      console.log('clean: ', walk);
+      walk.center.$el.removeClass('center');
     };
 
     var start = function () {
       var walk = {};
-
       walk.picadilly = getSection(sectionCount - 1);
       walk.center = getSection(0);
-      walk.center.$el.addClass('center');
       walk.jubilee = getSection(1);
       walk.scrollPos = 0;
-
-      append([
-        {view: walk.picadilly, whereTo: 'toPicadilly'},
-        {view: walk.center},
-        {view: walk.jubilee, whereTo: 'toJubilee'}
-      ]);
-
-      walk.toPicadilly = function () {
-        return walkToPicadilly(walk);
-      };
-
-      walk.toJubilee = function () {
-        return walkToJubilee(walk);
-      };
-
+      append([walk.picadilly, walk.center, walk.jubilee]);
+      initialize(walk);
       return walk;
     };
 
     var walkToJubilee = function(fromWalk) {
       var walk = {};
-
-      fromWalk.picadilly.toCenter();
-      fromWalk.picadilly.remove();
-      fromWalk.center.$el.removeClass('center');
-
+      console.log('walkToJubilee');
+      clean(fromWalk, 'picadilly');
       walk.scrollPos = next(fromWalk.scrollPos);
       walk.picadilly = fromWalk.center;
       walk.center = fromWalk.jubilee;
-      walk.center.$el.addClass('center');
-      walk.jubilee = getSection(next(walk.scrollPos));
-      append({view: walk.jubilee, whereTo: 'toJubilee'});
-
-      walk.toPicadilly = function () {
-        return walkToPicadilly(walk);
-      };
-
-      walk.toJubilee = function () {
-        return walkToJubilee(walk);
-      };
-
+      walk.jubilee = getSection(next(walk.scrollPos + 1));
+      initialize(walk);
+      append(walk.jubilee);
       return walk;
     };
 
     var walkToPicadilly = function(fromWalk) {
       var walk = {};
-
-      fromWalk.jubilee.toCenter();
-      fromWalk.jubilee.remove();
-      fromWalk.center.$el.removeClass('center');
-
+      console.log('walkToPicadilly');
+      clean(fromWalk, 'jubilee');
       walk.scrollPos = prev(fromWalk.scrollPos);
-      walk.picadilly = getSection(prev(walk.scrollPos));
+      walk.picadilly = getSection(prev(walk.scrollPos - 1));
       walk.center = fromWalk.picadilly;
-      walk.center.$el.addClass('center');
       walk.jubilee = fromWalk.center;
-      append({view: walk.picadilly, whereTo: 'toPicadilly'});
-
-      walk.toPicadilly = function () {
-        return walkToPicadilly(walk);
-      };
-
-      walk.toJubilee = function () {
-        return walkToJubilee(walk);
-      };
-
+      initialize(walk);
+      append(walk.picadilly);
       return walk;
     };
 

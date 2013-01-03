@@ -30,7 +30,7 @@ define(function (require) {
         'webkitTransitionEnd section.center': 'section_transitionendHandler'
       },
       initialize: function () {
-        this.walk = require('app/walk').start(this.$el, 3);
+        this.walk = require('app/walk').start(this.$el, 5);
       },
 
       //----------------------------------
@@ -39,9 +39,10 @@ define(function (require) {
       //
       //----------------------------------
 
-      update: function () {
+      // The real issue here is an event firing twice, this is just a hack :(
+      update: _.debounce(function () {
         this.walk = this.walk[this.whereTo]();
-      },
+      }, 100),
 
       //----------------------------------
       //
@@ -49,13 +50,11 @@ define(function (require) {
       //
       //----------------------------------
       picadilly_clickHandler: function (event) {
-        console.log('toPicadilly');
         this.whereTo = 'toPicadilly';
         this.walk.center.toJubilee(true);
         this.walk.picadilly.toCenter(true);
       },
       jubilee_clickHandler: function (event) {
-        console.log('toJubilee');
         this.whereTo = 'toJubilee';
         this.walk.center.toPicadilly(true);
         this.walk.jubilee.toCenter(true);
@@ -63,7 +62,6 @@ define(function (require) {
       section_transitionendHandler: function (event) {
         this.update();
       }
-
     });
 
     var greenPark = new GreenPark({});

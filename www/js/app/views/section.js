@@ -71,17 +71,14 @@ define(function (require) {
       //----------------------------------
 
       toPicadilly: function (animated) {
-        console.log('translate toPicadilly');
         translate(this.$el, -1, animated);
       },
 
       toJubilee: function (animated) {
-        console.log('translate toJubilee');
         translate(this.$el, 1, animated);
       },
 
       toCenter: function (animated) {
-        console.log('translate toCenter');
         translate(this.$el, 0, animated);
       }
 
