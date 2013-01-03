@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
     },
     lint: {
-      files: ['grunt.js', 'www/js/app.js', 'www/js/app/**/*.js', 'test/**/*.js']
+      files: ['grunt.js', 'www/js/app.js', 'www/js/app/**/*.js', 'test/test.js', 'test/tests/**/*.js']
     },
     less: {
       development: {
@@ -60,12 +60,30 @@ module.exports = function(grunt) {
     },
     htmllint: {
         all: ["www/index.html"]
+    },
+    qunit: {
+      files: ['test/**/*.html']
+    },
+    handlebars: {
+      compile: {
+        options: {
+          processName: function (filename) {
+            var pieces = filename.split('/');
+            filename = pieces[pieces.length - 1].replace('.hbs', '');
+            grunt.log.debug(filename);
+            return filename;
+          },
+        },
+        files: {
+          "www/js/templates/dist/templates.js": "www/js/templates/src/**/*.hbs"
+        }
+      }
     }
   });
 
-  grunt.loadNpmTasks('grunt-volo');
   grunt.loadNpmTasks('grunt-reload');
+  grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-html');
-  grunt.registerTask('default', 'server lint less reload watch');
+  grunt.registerTask('default', 'server lint less handlebars reload watch');
 };
