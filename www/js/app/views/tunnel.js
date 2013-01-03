@@ -5,6 +5,7 @@ define(function (require) {
     var $ = require('jquery');
     var Section = require('app/views/section');
     return Section.extend({
-      template: require('templates').tunnel
+      template: require('templates').tunnel,
+      viewId: 'app/views/tunnel'
     });
 });

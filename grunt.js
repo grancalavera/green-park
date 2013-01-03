@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['<config:lint.files>', 'www/less/**/*.less', 'www/**/*.html', 'www/js/templates/src/**/*.hbs'],
-      tasks: 'lint less handlebars reload'
+      tasks: 'lint less handlebars qunit reload'
     },
     server: {
       port: 8000,
@@ -85,5 +85,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-html');
-  grunt.registerTask('default', 'server lint less handlebars reload watch');
+  grunt.registerTask('default', 'server lint less handlebars qunit reload watch');
 };

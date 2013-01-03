@@ -30,7 +30,7 @@ define(function (require) {
         'webkitTransitionEnd section.center': 'section_transitionendHandler'
       },
       initialize: function () {
-        this.walk = require('app/walk').start(this.$el, 5);
+        this.walk = require('app/walk').start(3);
       },
 
       //----------------------------------

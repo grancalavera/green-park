@@ -35,6 +35,9 @@ define(function (require) {
     //
     //----------------------------------
     return Backbone.View.extend({
+
+      viewId: 'app/views/section',
+
       //----------------------------------
       //
       // State
@@ -55,6 +58,15 @@ define(function (require) {
 
       showPlatforms: function () {
 
+      },
+
+      //----------------------------------
+      //
+      // Misc
+      //
+      //----------------------------------
+      toString: function () {
+        return this.viewId;
       },
 
       //----------------------------------
