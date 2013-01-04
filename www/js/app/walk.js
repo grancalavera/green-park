@@ -51,70 +51,62 @@ define(function (require) {
       return p;
     };
 
-    var initialize = function (walk) {
-      var pos;
-
-      walk.getPositions = function () {
-        return getPositions(walk.scrollPos);
-      };
-
-      pos = walk.getPositions();
-      walk.picadilly = getSection(pos[0]);
-      walk.center = getSection(pos[1]);
-      walk.jubilee = getSection(pos[2]);
-
-      walk.next = function () {
-        return next(walk.scrollPos);
-      };
-
-      walk.prev = function () {
-        return prev(walk.scrollPos);
-      };
-
-      walk.place = function () {
-        walk.picadilly.toPicadilly();
-        walk.center.toCenter();
-        walk.jubilee.toJubilee();
-      };
-
-      walk.toPicadilly = function () {
-        return walkToPicadilly(walk);
-      };
-      walk.toJubilee = function () {
-        return walkToJubilee(walk);
-      };
-
-      walk.toString = function () {
-        var str = walk.picadilly.toString() +
-          ' - ' + walk.center.toString() +
-          ' - ' + walk.jubilee.toString();
+    var walkPrototype = {
+      scrollPos: null,
+      picadilly: null,
+      center: null,
+      jubilee: null,
+      init: function (scrollPos) {
+        var pos;
+        this.scrollPos = scrollPos;
+        pos = this.getPositions();
+        this.picadilly = getSection(pos[0]);
+        this.center = getSection(pos[1]);
+        this.jubilee = getSection(pos[2]);
+        this.updateLayout();
+        return this;
+      },
+      getPositions: function () {
+        return getPositions(this.scrollPos);
+      },
+      next: function () {
+        return next(this.scrollPos);
+      },
+      prev: function () {
+        return prev(this.scrollPos);
+      },
+      updateLayout: function () {
+        this.picadilly.toPicadilly();
+        this.center.toCenter();
+        this.jubilee.toJubilee();
+      },
+      toPicadilly: function () {
+        return walkToPicadilly(this);
+      },
+      toJubilee: function () {
+        return walkToJubilee(this);
+      },
+      toString: function () {
+        var str = this.picadilly.toString() +
+          ' - ' + this.center.toString() +
+          ' - ' + this.jubilee.toString();
         return str;
-      };
-
-      walk.place();
+      }
     };
 
-    var start = function () {
-      var walk = {};
-      walk.scrollPos = 0;
-      initialize(walk);
-      return walk;
+    // constructor
+    var createWalk = function (scrollPos) {
+      return _.extend({}, walkPrototype).init(scrollPos);
     };
 
     // Same as 'walk left'
     var walkToJubilee = function(fromWalk) {
-      var walk = {};
-      walk.scrollPos = fromWalk.next();
-      initialize(walk);
-      return walk;
+      return createWalk(fromWalk.next());
     };
 
     // Same as 'walk right'
     var walkToPicadilly = function(fromWalk) {
-      var walk = {};
-      walk.scrollPos = fromWalk.prev();
-      initialize(walk);
-      return walk;
+      return createWalk(fromWalk.prev());
     };
 
     return {
@@ -125,7 +117,7 @@ define(function (require) {
         } else {
           sectionCount = 3;
         }
-        return start();
+        return createWalk(0);
       }
     };
 
