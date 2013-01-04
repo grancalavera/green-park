@@ -13,6 +13,7 @@ define(function (require) {
     var Backbone = require('backbone');
     var Modernizr = require('modernizr');
     var _ = require('underscore');
+    var detection = require('app/detection');
 
     var sections = 10;
     var transitionEvents = [
@@ -128,5 +129,6 @@ define(function (require) {
 
     });
 
+    detection.run();
     var greenPark = new GreenPark({});
 });

@@ -34,6 +34,5 @@
       }
     }
   });
-
   requirejs(['app/greenpark']);
 })();
