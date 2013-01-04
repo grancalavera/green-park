@@ -1,32 +1,34 @@
 // Base section module
 // leoncoto@gmail.com
 define(function (require) {
+
     'use strict';
 
-    //----------------------------------
-    //
-    // Setup
-    //
-    //----------------------------------
     var $ = require('jquery');
     var Backbone = require('backbone');
     var _ = require('underscore');
-    var win = $(window);
 
-    //----------------------------------
-    //
-    // Helpers
-    //
-    //----------------------------------
+    var $win = $(window);
 
     var translate = function ($el, dir, animated) {
-      var distance = win.width() * dir;
+      var distance = $win.width() * dir;
       if (animated) {
         $el.addClass('animated');
       } else {
         $el.removeClass('animated');
       }
       $el.css('transform', 'translateX(' + distance + 'px)');
+    };
+
+    var getDimenstions = function () {
+      var w = $win.width(), h = $win.height(), d = {
+        width: w,
+        height: h,
+        toString: function () {
+          return w + 'px * ' + h + 'px';
+        }
+      };
+      return d;
     };
 
     //--------------------------------------------------------------------------
@@ -38,6 +40,7 @@ define(function (require) {
     return Backbone.View.extend({
 
       viewId: 'app/views/section',
+      dimensions: {},
 
       //----------------------------------
       //
@@ -55,10 +58,14 @@ define(function (require) {
 
       tagName: 'section',
       initialize: function () {
-        this.hidePlatforms();
       },
       render: function() {
-        this.$el.html(this.template());
+        var dimensions = getDimenstions();
+        if (this.dimensions.toString() !== dimensions.toString()) {
+          this.dimensions = dimensions;
+          this.$el.html(this.template(this.renderingContext()));
+          this.draw();
+        }
         return this;
       },
 
@@ -75,7 +82,15 @@ define(function (require) {
       // Section stuff
       //
       //----------------------------------
-
+      draw: function (){
+        console.warn('Section.draw: draw() must be implemented in a sub-module.');
+      },
+      renderingContext: function () {
+        return {
+          width: this.dimensions.width,
+          height: this.dimensions.height
+        };
+      },
       toPicadilly: function (animated) {
         translate(this.$el, -1, animated);
       },

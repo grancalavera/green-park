@@ -1,13 +1,8 @@
 // Manages the state during the walk-through in the station.
 // leoncoto@gmail.com
 define(function (require) {
-    'use strict';
 
-    //--------------------------------------------------------------------------
-    //
-    // Setup
-    //
-    //--------------------------------------------------------------------------
+    'use strict';
 
     var $ = require('jquery');
     var _ = require('underscore');

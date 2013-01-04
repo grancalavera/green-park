@@ -10,8 +10,10 @@
   position:absolute;
 }
 
-section .tunnel {
+section.tunnel {
   nav {
+    position: relative;
+    z-index: 1;
     margin-top: @tunnelMargin;
     .picadilly {
       margin-left: @tunnelMargin;
@@ -19,6 +21,12 @@ section .tunnel {
     .jubilee {
       margin-right: @tunnelMargin;
     }
+  }
+  canvas {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
   }
 }
 

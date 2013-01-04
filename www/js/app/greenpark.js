@@ -1,19 +1,13 @@
 // Main application controller
 // leoncoto@gmail.com
 define(function (require) {
-    'use strict';
 
-    //--------------------------------------------------------------------------
-    //
-    // Setup
-    //
-    //--------------------------------------------------------------------------
+    'use strict';
 
     var $ = require('jquery');
     var Backbone = require('backbone');
     var Modernizr = require('modernizr');
     var _ = require('underscore');
-    var detection = require('app/detection');
     var walk = require('app/state/walk');
 
     var sections = 10;
@@ -130,6 +124,5 @@ define(function (require) {
 
     });
 
-    detection.run();
     var greenPark = new GreenPark({});
 });
