@@ -22,7 +22,7 @@ define(function (require) {
       raises(block, [expected], [message])
   */
   var $ = require('jquery');
-  var walk =  require('app/walk');
+  var walk =  require('app/state/walk');
 
   function start(sections) {
     return walk.start(sections);

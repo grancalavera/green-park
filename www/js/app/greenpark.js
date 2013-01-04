@@ -14,6 +14,7 @@ define(function (require) {
     var Modernizr = require('modernizr');
     var _ = require('underscore');
     var detection = require('app/detection');
+    var walk = require('app/state/walk');
 
     var sections = 10;
     var transitionEvents = [
@@ -52,7 +53,7 @@ define(function (require) {
         'click .platform.jubilee': 'jubilee_clickHandler'
       },
       initialize: function () {
-        this.walk = require('app/walk').start(sections);
+        this.walk = walk.start(sections);
         this.walk.center.$el.addClass('center');
         this.appendAll();
         this.updateLayout();
