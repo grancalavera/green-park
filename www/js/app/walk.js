@@ -3,82 +3,91 @@
 define(function (require) {
     'use strict';
 
+    //--------------------------------------------------------------------------
+    //
+    // Setup
+    //
+    //--------------------------------------------------------------------------
+
     var $ = require('jquery');
     var _ = require('underscore');
     var Start = require('app/views/start');
     var Tunnel = require('app/views/tunnel');
-    var sectionCount = 3;
-    var $el = null;
-    var sections = [];
 
-    var getSection = function(index) {
-      var section = sections[index];
-      if (section) {
-        return section;
-      }
-      if (index === 0) {
-        section = new Start();
-      } else {
-        section = new Tunnel();
-      }
-      sections[index] = section;
-      return section;
-    };
+    //--------------------------------------------------------------------------
+    //
+    // Protos
+    //
+    //--------------------------------------------------------------------------
 
-    var next = function (scrollPos) {
-      scrollPos += 1;
-      if (scrollPos < sectionCount) {
-        return scrollPos;
-      } else {
-        return 0;
-      }
-    };
+    //----------------------------------
+    //
+    // Sections
+    //
+    //----------------------------------
 
-    var prev = function (scrollPos) {
-      scrollPos -= 1;
-      if (scrollPos >= 0) {
-        return scrollPos;
-      } else {
-        return sectionCount - 1;
-      }
-    };
-
-    var getPositions = function (scrollPos) {
-      var p = [];
-      p[0] = prev(scrollPos);
-      p[1] = scrollPos;
-      p[2] = next(scrollPos);
-      return p;
-    };
-
-    var walkPrototype = {
-      scrollPos: null,
-      picadilly: null,
-      center: null,
-      jubilee: null,
-      init: function (scrollPos) {
-        var pos;
-        this.scrollPos = scrollPos;
-        pos = this.getPositions();
-        this.picadilly = getSection(pos[0]);
-        this.center = getSection(pos[1]);
-        this.jubilee = getSection(pos[2]);
-        this.updateLayout();
+    var sectionsPrototype = {
+      sections: [],
+      count: 3,
+      init: function (count) {
+        if (_.isNumber(count) && (count >= 3)) {
+          this.count = count;
+        } else {
+          this.count = 3;
+        }
         return this;
       },
-      getPositions: function () {
-        return getPositions(this.scrollPos);
+      getSection: function (index) {
+        var section = this.sections[index];
+        if (section) {
+          return section;
+        }
+        if (index === 0) {
+          section = new Start();
+        } else {
+          section = new Tunnel();
+        }
+        this.sections[index] = section;
+        return section;
       },
-      next: function () {
-        return next(this.scrollPos);
+      next: function (scrollPos) {
+        scrollPos += 1;
+        if (scrollPos < this.count) {
+          return scrollPos;
+        } else {
+          return 0;
+        }
       },
-      prev: function () {
-        return prev(this.scrollPos);
+      prev: function (scrollPos) {
+        scrollPos -= 1;
+        if (scrollPos >= 0) {
+          return scrollPos;
+        } else {
+          return this.count - 1;
+        }
       },
-      updateLayout: function () {
-        this.picadilly.toPicadilly();
-        this.center.toCenter();
-        this.jubilee.toJubilee();
+      positions: function (scrollPos) {
+        return [this.prev(scrollPos), scrollPos, this.next(scrollPos)];
+      }
+    };
+
+    //----------------------------------
+    //
+    // Walk
+    //
+    //----------------------------------
+
+    var walkPrototype = {
+      init: function (scrollPos, sections) {
+        this.scrollPos = scrollPos;
+        this.sections = sections;
+        this.positions = this.sections.positions(scrollPos);
+        this.next = this.sections.next(scrollPos);
+        this.prev = this.sections.prev(scrollPos);
+        this.picadilly = this.sections.getSection(this.positions[0]);
+        this.center = this.sections.getSection(this.positions[1]);
+        this.jubilee = this.sections.getSection(this.positions[2]);
+        return this;
       },
       toPicadilly: function () {
         return walkToPicadilly(this);
@@ -94,30 +103,39 @@ define(function (require) {
       }
     };
 
-    // constructor
-    var createWalk = function (scrollPos) {
-      return _.extend({}, walkPrototype).init(scrollPos);
+    //--------------------------------------------------------------------------
+    //
+    // Constructors
+    //
+    //--------------------------------------------------------------------------
+
+    var createSections = function (count) {
+      return _.extend({}, sectionsPrototype).init(count);
+    };
+
+    var createWalk = function (scrollPos, sections) {
+      return _.extend({}, walkPrototype).init(scrollPos, sections);
     };
 
     // Same as 'walk left'
     var walkToJubilee = function(fromWalk) {
-      return createWalk(fromWalk.next());
+      return createWalk(fromWalk.next, fromWalk.sections);
     };
 
     // Same as 'walk right'
     var walkToPicadilly = function(fromWalk) {
-      return createWalk(fromWalk.prev());
+      return createWalk(fromWalk.prev, fromWalk.sections);
     };
+
+    //--------------------------------------------------------------------------
+    //
+    // Module exports
+    //
+    //--------------------------------------------------------------------------
 
     return {
       start: function (count) {
-        sections = [];
-        if (_.isNumber(count) && (count >= 3)) {
-          sectionCount = count;
-        } else {
-          sectionCount = 3;
-        }
-        return createWalk(0);
+        return createWalk(0, createSections(count));
       }
     };
 

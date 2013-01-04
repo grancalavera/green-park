@@ -29,11 +29,12 @@ define(function (require) {
       $el.css('transform', 'translateX(' + distance + 'px)');
     };
 
-    //----------------------------------
+    //--------------------------------------------------------------------------
     //
-    // The view itself
+    // Section
     //
-    //----------------------------------
+    //--------------------------------------------------------------------------
+
     return Backbone.View.extend({
 
       viewId: 'app/views/section',
@@ -43,6 +44,7 @@ define(function (require) {
       // State
       //
       //----------------------------------
+
       template: function () { return ''; },
 
       //----------------------------------
@@ -50,6 +52,7 @@ define(function (require) {
       // Backbone stuff
       //
       //----------------------------------
+
       tagName: 'section',
       initialize: function () {
         this.hidePlatforms();
@@ -69,16 +72,7 @@ define(function (require) {
 
       //----------------------------------
       //
-      // Misc
-      //
-      //----------------------------------
-      toString: function () {
-        return this.viewId;
-      },
-
-      //----------------------------------
-      //
-      // Walking
+      // Section stuff
       //
       //----------------------------------
 
@@ -92,6 +86,16 @@ define(function (require) {
 
       toCenter: function (animated) {
         translate(this.$el, 0, animated);
+      },
+
+      //----------------------------------
+      //
+      // Misc
+      //
+      //----------------------------------
+
+      toString: function () {
+        return this.viewId;
       }
 
     });

@@ -1,7 +1,29 @@
-section {
+@tunnelMargin: 30px;
+
+#sections, section {
   width: 100%;
   height: 100%;
+}
+
+#sections, body {
+  overflow: hidden;
+}
+
+section {
   position:absolute;
+  border: 10px solid @undDarkBlue;
+}
+
+section .tunnel {
+  nav {
+    margin-top: @tunnelMargin;
+    .picadilly {
+      margin-left: @tunnelMargin;
+    }
+    .jubilee {
+      margin-right: @tunnelMargin;
+    }
+  }
 }
 
 section.animated {

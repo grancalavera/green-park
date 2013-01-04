@@ -37,34 +37,34 @@ define(function (require) {
 
   test('next, 3 sections', function () {
     var walk = start(3);
-    equal(walk.next(), 1, 'next should be 1');
-    equal(walk.toJubilee().next(), 2, 'next shound be 2');
-    equal(walk.toPicadilly().next(), 0, 'next should be 0');
+    equal(walk.next, 1, 'next should be 1');
+    equal(walk.toJubilee().next, 2, 'next shound be 2');
+    equal(walk.toPicadilly().next, 0, 'next should be 0');
   });
 
   test('prev, 3 sections', function () {
     var walk = start(3);
-    equal(walk.prev(), 2, 'prev should be 2');
-    equal(walk.toJubilee().prev(), 0, 'prev shound be 0');
-    equal(walk.toPicadilly().prev(), 1, 'prev should be 1');
+    equal(walk.prev, 2, 'prev should be 2');
+    equal(walk.toJubilee().prev, 0, 'prev shound be 0');
+    equal(walk.toPicadilly().prev, 1, 'prev should be 1');
   });
 
   test('position by index, 3 sections', function () {
     var walk = start(3);
     // start
-    deepEqual(walk.getPositions(), [2, 0, 1], 'start: should be [2, 0, 1]');
+    deepEqual(walk.positions, [2, 0, 1], 'start: should be [2, 0, 1]');
     // once, each way
-    deepEqual(walk.toJubilee().getPositions(), [0, 1, 2], 'once > jubilee: should be [0, 1, 2]');
-    deepEqual(walk.toPicadilly().getPositions(), [1, 2, 0], 'once > picadilly: should be [1, 2, 0]');
+    deepEqual(walk.toJubilee().positions, [0, 1, 2], 'once > jubilee: should be [0, 1, 2]');
+    deepEqual(walk.toPicadilly().positions, [1, 2, 0], 'once > picadilly: should be [1, 2, 0]');
     // twice, each way
-    deepEqual(walk.toJubilee().toJubilee().getPositions(), [1, 2, 0], 'twice:  > jubilee: should be [1, 2, 0]');
-    deepEqual(walk.toPicadilly().toPicadilly().getPositions(), [0, 1, 2], 'twice > picadilly: should be [0, 1, 2]');
+    deepEqual(walk.toJubilee().toJubilee().positions, [1, 2, 0], 'twice:  > jubilee: should be [1, 2, 0]');
+    deepEqual(walk.toPicadilly().toPicadilly().positions, [0, 1, 2], 'twice > picadilly: should be [0, 1, 2]');
     // trice, each way
-    deepEqual(walk.toJubilee().toJubilee().toJubilee().getPositions(), [2, 0, 1], 'trice > jubilee: should be [2, 0, 1]');
-    deepEqual(walk.toPicadilly().toPicadilly().toPicadilly().getPositions(), [2, 0, 1], ' > picadilly: should be [2, 0, 1]');
+    deepEqual(walk.toJubilee().toJubilee().toJubilee().positions, [2, 0, 1], 'trice > jubilee: should be [2, 0, 1]');
+    deepEqual(walk.toPicadilly().toPicadilly().toPicadilly().positions, [2, 0, 1], ' > picadilly: should be [2, 0, 1]');
     // once and back
-    deepEqual(walk.toJubilee().toPicadilly().getPositions(), [2, 0, 1], 'once and back jubilee > picadilly: should be [2, 0, 1]');
-    deepEqual(walk.toPicadilly().toJubilee().getPositions(), [2, 0, 1], 'once and back picadilly > jubilee: should be [2, 0, 1]');
+    deepEqual(walk.toJubilee().toPicadilly().positions, [2, 0, 1], 'once and back jubilee > picadilly: should be [2, 0, 1]');
+    deepEqual(walk.toPicadilly().toJubilee().positions, [2, 0, 1], 'once and back picadilly > jubilee: should be [2, 0, 1]');
   });
 
   test('initial position, 3 sections', function () {

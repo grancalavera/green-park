@@ -3,16 +3,17 @@
 define(function (require) {
     'use strict';
 
-    //----------------------------------
+    //--------------------------------------------------------------------------
     //
-    // Module-wide variables
+    // Setup
     //
-    //----------------------------------
+    //--------------------------------------------------------------------------
 
     var $ = require('jquery');
     var Backbone = require('backbone');
     var Modernizr = require('modernizr');
     var _ = require('underscore');
+
     var sections = 10;
     var transitionEvents = [
       'transitionend',
@@ -22,12 +23,20 @@ define(function (require) {
     var $win = $(window);
     var $doc = $(document);
 
+    //--------------------------------------------------------------------------
+    //
+    // GreenPark
+    //
+    //--------------------------------------------------------------------------
+
     var GreenPark = Backbone.View.extend({
+
       //----------------------------------
       //
       // State
       //
       //----------------------------------
+
       whereTo: '',
 
       //----------------------------------
@@ -35,6 +44,7 @@ define(function (require) {
       // Backbone stuff
       //
       //----------------------------------
+
       el: document.body,
       events: {
         'click .platform.picadilly': 'picadilly_clickHandler',
@@ -44,59 +54,59 @@ define(function (require) {
         this.walk = require('app/walk').start(sections);
         this.walk.center.$el.addClass('center');
         this.appendAll();
-        var updtDim = _.bind(_.debounce(this.updateDimensions, 100), this);
+        this.updateLayout();
+        var updateLayout = _.bind(_.debounce(this.updateLayout, 100), this);
         if (isTouch) {
-          $win.on('orientationchange', updtDim);
+          $win.on('orientationchange', updateLayout);
         } else {
-          $win.on('resize', updtDim);
+          $win.on('resize', updateLayout);
         }
-        console.log(Modernizr.mq('(orientation: landscape)'));
-        console.log(Modernizr.mq('(orientation: portrait)'));
       },
 
       //----------------------------------
       //
-      // Walking stuff
+      // GreeenPark stuff
       //
       //----------------------------------
-      onTransition: function () {
+
+      afterTransition: function (toWalkCallback) {
         var $el = this.walk.center.$el;
-        $el.on(transitionEvents, _.bind(this.update, this));
-      },
-      offTransition: function () {
-        var $el = this.walk.center.$el;
-        $el.off(transitionEvents);
+        var update = _.bind(function () {
+          // The current walk is updated here
+          this.walk = toWalkCallback.call(this, this.walk);
+          this.updateLayout();
+          $el.off(transitionEvents);
+        }, this);
+        $el.on(transitionEvents, update);
       },
       append: function (view) {
         var el = view.render().el;
-        this.$el.prepend(el);
+        this.$('#sections').prepend(el);
       },
       appendAll: function () {
         this.append(this.walk.picadilly);
         this.append(this.walk.center);
         this.append(this.walk.jubilee);
       },
-      update: function () {
-        var oldWalk = this.walk;
-        var walk = this.walk[this.whereTo]();
-        this.offTransition();
-        switch(this.whereTo) {
-          case 'toPicadilly':
-            this.append(walk.picadilly);
-            oldWalk.jubilee.remove();
-            break;
-          case 'toJubilee':
-            this.append(walk.jubilee);
-            oldWalk.picadilly.remove();
-            break;
-        }
-        walk.picadilly.$el.removeClass('center');
-        walk.center.$el.addClass('center');
-        walk.jubilee.$el.removeClass('center');
-        this.walk = walk;
+      updateLayout: function () {
+        this.walk.picadilly.$el.removeClass('center');
+        this.walk.center.$el.addClass('center');
+        this.walk.jubilee.$el.removeClass('center');
+        this.walk.picadilly.toPicadilly();
+        this.walk.center.toCenter();
+        this.walk.jubilee.toJubilee();
       },
-      updateDimensions: function () {
-        console.log('update dimensions');
+      toPicadilly: function (fromWalk) {
+        var toWalk = fromWalk.toPicadilly();
+        this.append(toWalk.picadilly);
+        fromWalk.jubilee.remove();
+        return toWalk;
+      },
+      toJubilee: function (fromWalk) {
+        var toWalk = fromWalk.toJubilee();
+        this.append(toWalk.jubilee);
+        fromWalk.picadilly.remove();
+        return toWalk;
       },
 
       //----------------------------------
@@ -104,21 +114,18 @@ define(function (require) {
       // Event handlers
       //
       //----------------------------------
+
       picadilly_clickHandler: function (event) {
-        this.whereTo = 'toPicadilly';
-        this.onTransition();
+        this.afterTransition(this.toPicadilly);
         this.walk.center.toJubilee(true);
         this.walk.picadilly.toCenter(true);
       },
       jubilee_clickHandler: function (event) {
-        this.whereTo = 'toJubilee';
-        this.onTransition();
+        this.afterTransition(this.toJubilee);
         this.walk.center.toPicadilly(true);
         this.walk.jubilee.toCenter(true);
-      },
-      section_transitionendHandler: function (event) {
-        this.update();
       }
+
     });
 
     var greenPark = new GreenPark({});
