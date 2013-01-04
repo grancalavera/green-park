@@ -10,7 +10,7 @@ define(function (require) {
     var _ = require('underscore');
     var walk = require('app/state/walk');
 
-    var sections = 10;
+    var sections = 5;
     var transitionEvents = [
       'transitionend',
       'webkitTransitionEnd'
@@ -91,6 +91,9 @@ define(function (require) {
         this.walk.picadilly.toPicadilly();
         this.walk.center.toCenter();
         this.walk.jubilee.toJubilee();
+        this.walk.picadilly.render();
+        this.walk.center.render();
+        this.walk.jubilee.render();
       },
       toPicadilly: function (fromWalk) {
         var toWalk = fromWalk.toPicadilly();
