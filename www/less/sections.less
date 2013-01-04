@@ -10,23 +10,32 @@
   position:absolute;
 }
 
-section.tunnel {
-  nav {
-    position: relative;
+section {
+  nav, header {
     z-index: 1;
-    margin-top: @tunnelMargin;
-    .picadilly {
-      margin-left: @tunnelMargin;
-    }
-    .jubilee {
-      margin-right: @tunnelMargin;
-    }
+    position: relative;
   }
   canvas {
     position: absolute;
     z-index: 0;
     top: 0;
+  }
+  &.start canvas:nth-child(1) {
     left: 0;
+  }
+  &.start canvas:nth-child(2) {
+    right: 0;
+  }
+  &.tunnel {
+    nav {
+      margin-top: @tunnelMargin;
+      .picadilly {
+        margin-left: @tunnelMargin;
+      }
+      .jubilee {
+        margin-right: @tunnelMargin;
+      }
+    }
   }
 }
 
