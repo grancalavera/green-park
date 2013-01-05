@@ -51,15 +51,16 @@ define(function (require) {
       },
 
       drawSide: function (canvas) {
-        var context = canvas.getContext('2d');
         var margin = 30;
+        var context = canvas.getContext('2d');
+        var renCtx = this.renderingContext();
         if (context) {
           context.fillStyle = "rgba(200,0,0,0.5)";
           context.fillRect(
             margin / 2,
             margin / 2,
-            this.dimensions.width - margin,
-            this.dimensions.height - margin - 60 // the footer height
+            renCtx.width - margin,
+            renCtx.height - margin - 60 // the footer height
           );
         }
       }

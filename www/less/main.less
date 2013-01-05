@@ -15,13 +15,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight:400;
 }
 
-.tile {
-  background-color: @white;
-  .border-radius(1px);
-  position:absolute;
-}
-
-// There's only 1 footer element used on the site... soo...
 footer {
   height: @footerHeight;
   background-color: @white;
@@ -29,10 +22,22 @@ footer {
   z-index: 1000;
   bottom:0;
   width: 100%;
+  .container .credit {
+    margin: 20px 0;
+  }
+}
+
+section .container, footer .container {
+  width: auto;
+}
+
+section.start .container,
+footer .container {
+    max-width: 680px;
 }
 
 @media (max-width: 767px) {
-  footer {
+  body > footer {
     margin-left: -20px;
     margin-right: -20px;
     padding-left: 20px;
@@ -40,10 +45,3 @@ footer {
   }
 }
 
-.container {
-  width: auto;
-  max-width: 680px;
-}
-.container .credit {
-  margin: 20px 0;
-}

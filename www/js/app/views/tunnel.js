@@ -40,14 +40,15 @@ define(function (require) {
       draw: function () {
         var margin = 30;
         var canvas = this.$('canvas')[0];
+        var renCtx = this.renderingContext();
         var context = canvas.getContext('2d');
         if (context) {
           context.fillStyle = "rgba(200,0,0,0.5)";
           context.fillRect(
             margin / 2,
             margin / 2,
-            this.dimensions.width - margin,
-            this.dimensions.height - margin - 60 // the footer height
+            renCtx.width - margin,
+            renCtx.height - margin - 60 // the footer height
           );
         }
       }

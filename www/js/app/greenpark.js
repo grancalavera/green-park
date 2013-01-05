@@ -18,6 +18,7 @@ define(function (require) {
     var isTouch = Modernizr.touch;
     var $win = $(window);
     var $doc = $(document);
+    var container = '#green-park';
 
     //--------------------------------------------------------------------------
     //
@@ -77,7 +78,7 @@ define(function (require) {
       },
       append: function (view) {
         var el = view.render().el;
-        this.$('#sections').prepend(el);
+        this.$(container).prepend(el);
       },
       appendAll: function () {
         this.append(this.walk.picadilly);
