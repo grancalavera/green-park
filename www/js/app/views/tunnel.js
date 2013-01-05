@@ -31,26 +31,15 @@ define(function (require) {
       //
       //----------------------------------
 
-      renderingContext: function () {
+      getRenderingContext: function () {
         var additions = {};
-        var defaultContext = Section.prototype.renderingContext.call(this);
+        var defaultContext = Section.prototype.getRenderingContext.call(this);
         return _.extend({}, defaultContext, additions);
       },
 
       draw: function () {
-        var margin = 30;
-        var canvas = this.$('canvas')[0];
-        var renCtx = this.renderingContext();
-        var context = canvas.getContext('2d');
-        if (context) {
-          context.fillStyle = "rgba(200,0,0,0.5)";
-          context.fillRect(
-            margin / 2,
-            margin / 2,
-            renCtx.width - margin,
-            renCtx.height - margin - 60 // the footer height
-          );
-        }
+        this.drawCanvas(this.$('canvas')[0]);
       }
+
     });
 });

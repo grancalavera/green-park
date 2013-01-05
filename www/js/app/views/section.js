@@ -10,6 +10,12 @@ define(function (require) {
 
     var $win = $(window);
 
+    var cPicadilly = 'rgb(35, 76, 166)';
+    var cJubilee = 'rgb(123, 132, 143)';
+    var tile = 20;
+    var gap = 2;
+    var cell = tile + gap;
+
     var translate = function ($el, dir, animated) {
       var distance = $win.width() * dir;
       if (animated) {
@@ -31,6 +37,10 @@ define(function (require) {
       return d;
     };
 
+    var defaultNumber = function (value, def) {
+      return _.isNumber(value) ? value : def;
+    };
+
     //--------------------------------------------------------------------------
     //
     // Section
@@ -41,6 +51,7 @@ define(function (require) {
 
       viewId: 'app/views/section',
       dimensions: {},
+      renderingContext: {},
 
       //----------------------------------
       //
@@ -63,7 +74,8 @@ define(function (require) {
         var dimensions = getDimenstions();
         if (this.dimensions.toString() !== dimensions.toString()) {
           this.dimensions = dimensions;
-          this.$el.html(this.template(this.renderingContext()));
+          this.renderingContext = this.getRenderingContext();
+          this.$el.html(this.template(this.renderingContext));
           this.draw();
         }
         return this;
@@ -82,14 +94,37 @@ define(function (require) {
       // Section stuff
       //
       //----------------------------------
+      drawCanvas: function (canvas) {
+        var rctx = this.renderingContext;
+        var ctx = canvas.getContext('2d');
+        var margin = 4;
+        var darkGray = 'rgba(63,78,90, 0.2)';
+        if(ctx) {
+          ctx.fillStyle = darkGray;
+          ctx.fillRect(0, 0, rctx.width, rctx.height);
+        }
+      },
       draw: function (){
         console.warn('Section.draw: draw() must be implemented in a sub-module.');
       },
-      renderingContext: function () {
+      getRenderingContext: function () {
+
+        var from = defaultNumber(this.options.from, 0);
+        var to = defaultNumber(this.options.to, 1);
+        var w = this.dimensions.width;
+        var h = this.dimensions.height;
+        var cols = Math.floor(w / cell);
+        var rows = Math.floor(h / cell);
+
         return {
-          width: this.dimensions.width,
-          height: this.dimensions.height
+          width: w,
+          height: h,
+          from: from,
+          to: to,
+          cols: cols,
+          rows: rows
         };
+
       },
       toPicadilly: function (animated) {
         translate(this.$el, -1, animated);

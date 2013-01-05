@@ -35,34 +35,19 @@ define(function (require) {
       //
       //----------------------------------
 
-      renderingContext: function () {
+      getRenderingContext: function () {
         var width = Math.max(this.dimensions.width / cols, max);
         var additions = {
           width: width
         };
-        var defaultContext = Section.prototype.renderingContext.call(this);
+        var defaultContext = Section.prototype.getRenderingContext.call(this);
         return _.extend({}, defaultContext, additions);
       },
 
       draw: function () {
         var canvases = this.$('canvas');
-        this.drawSide(canvases[0], 'picadilly');
-        this.drawSide(canvases[1], 'jubilee');
-      },
-
-      drawSide: function (canvas) {
-        var margin = 30;
-        var context = canvas.getContext('2d');
-        var renCtx = this.renderingContext();
-        if (context) {
-          context.fillStyle = "rgba(200,0,0,0.5)";
-          context.fillRect(
-            margin / 2,
-            margin / 2,
-            renCtx.width - margin,
-            renCtx.height - margin - 60 // the footer height
-          );
-        }
+        this.drawCanvas(canvases[0]);
+        this.drawCanvas(canvases[1]);
       }
 
     });
