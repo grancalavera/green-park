@@ -8,9 +8,6 @@ define(function (require) {
     var _ = require('underscore');
     var Section = require('app/views/section');
 
-    var max = 280;
-    var cols = 4;
-
     //--------------------------------------------------------------------------
     //
     // Start
@@ -36,7 +33,7 @@ define(function (require) {
       //----------------------------------
 
       getRenderingContextAdditions: function () {
-        var width = Math.max(this.dimensions.width / cols, max);
+        var width = 170;
         var additions = {
           width: width
         };
