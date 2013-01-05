@@ -18,6 +18,19 @@ define(function (require) {
     var cell = side + gap;
     var footerHeight = 60;
 
+    // odds = 1 is always true
+    // odds = 0 is always false
+    function biasedCoin(odds) {
+      return function () {
+        if (odds === 0) {
+          return false;
+        }
+        return Math.random() <= odds ? true : false;
+      };
+    }
+
+    var paintTile = biasedCoin(0.20);
+
     var translate = function ($el, dir, animated) {
       var distance = $win.width() * dir;
       if (animated) {
@@ -137,13 +150,18 @@ define(function (require) {
 
         tiles = _.reduce(_.range(0, cols), function (ts, cIndex, cIndex2, cs) {
           var col = _.reduce(_.range(0, rows), function (cl, rIndex, rIndex2, rw) {
-            var tile = {
+            var odds, tile = {
               x: cIndex * cell + hOff,
               y: rIndex * cell + vOff,
               w: side,
               h: side,
               s: cWhite
             };
+            if (paintTile()) {
+              // for jubilee
+              odds = cIndex / (cs.length  - 1);
+              tile.s = biasedCoin(odds)() ? cJubilee : cPicadilly;
+            }
             cl.push(tile);
             return cl;
           }, []);
