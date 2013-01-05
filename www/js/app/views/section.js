@@ -12,9 +12,11 @@ define(function (require) {
 
     var cPicadilly = 'rgb(35, 76, 166)';
     var cJubilee = 'rgb(123, 132, 143)';
-    var tile = 20;
+    var cWhite = 'rgb(225,223,214)';
+    var side = 20;
     var gap = 2;
-    var cell = tile + gap;
+    var cell = side + gap;
+    var footerHeight = 60;
 
     var translate = function ($el, dir, animated) {
       var distance = $win.width() * dir;
@@ -27,7 +29,7 @@ define(function (require) {
     };
 
     var getDimenstions = function () {
-      var w = $win.width(), h = $win.height(), d = {
+      var w = $win.width(), h = $win.height() - footerHeight, d = {
         width: w,
         height: h,
         toString: function () {
@@ -94,37 +96,62 @@ define(function (require) {
       // Section stuff
       //
       //----------------------------------
+      drawTile: function (ctx, tile) {
+        ctx.fillStyle = tile.s;
+        ctx.fillRect (tile.x, tile.y, tile.w, tile.h);
+      },
       drawCanvas: function (canvas) {
-        var rctx = this.renderingContext;
+        var tiles = this.renderingContext.tiles;
         var ctx = canvas.getContext('2d');
-        var margin = 4;
-        var darkGray = 'rgba(63,78,90, 0.2)';
         if(ctx) {
-          ctx.fillStyle = darkGray;
-          ctx.fillRect(0, 0, rctx.width, rctx.height);
+          _.each(tiles, function (tile) {
+            this.drawTile(ctx, tile);
+          }, this);
         }
       },
       draw: function (){
-        console.warn('Section.draw: draw() must be implemented in a sub-module.');
+        throw(new Error('Section.draw: draw() must be implemented in a sub-module.'));
+      },
+      getRenderingContextAdditions: function () {
+        throw(new Error('Section.getRenderingContextAdditions: getRenderingContextAdditions() must be implemented in a sub-module.'));
       },
       getRenderingContext: function () {
 
+        var width, height, cols, rows, hOff, vOff, tiles;
         var from = defaultNumber(this.options.from, 0);
         var to = defaultNumber(this.options.to, 1);
-        var w = this.dimensions.width;
-        var h = this.dimensions.height;
-        var cols = Math.floor(w / cell);
-        var rows = Math.floor(h / cell);
 
-        return {
-          width: w,
-          height: h,
-          from: from,
-          to: to,
-          cols: cols,
-          rows: rows
+        var rctx = {
+          width: this.dimensions.width,
+          height: this.dimensions.height
         };
 
+        rctx = _.extend(rctx, this.getRenderingContextAdditions());
+
+        width = rctx.width;
+        height = rctx.height;
+        cols = Math.floor(width / cell);
+        rows = Math.floor(height / cell);
+        hOff = Math.floor((width - (cell * cols)) / 2);
+        vOff = Math.floor((height - (cell * rows)) / 2);
+
+        tiles = _.reduce(_.range(0, cols), function (ts, cIndex, cIndex2, cs) {
+          var col = _.reduce(_.range(0, rows), function (cl, rIndex, rIndex2, rw) {
+            var tile = {
+              x: cIndex * cell + hOff,
+              y: rIndex * cell + vOff,
+              w: side,
+              h: side,
+              s: cWhite
+            };
+            cl.push(tile);
+            return cl;
+          }, []);
+          return ts.concat(col);
+        }, []);
+
+        rctx.tiles = tiles;
+        return rctx;
       },
       toPicadilly: function (animated) {
         translate(this.$el, -1, animated);

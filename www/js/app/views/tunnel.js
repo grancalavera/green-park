@@ -31,10 +31,9 @@ define(function (require) {
       //
       //----------------------------------
 
-      getRenderingContext: function () {
+      getRenderingContextAdditions: function () {
         var additions = {};
-        var defaultContext = Section.prototype.getRenderingContext.call(this);
-        return _.extend({}, defaultContext, additions);
+        return additions;
       },
 
       draw: function () {

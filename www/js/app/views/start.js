@@ -35,13 +35,12 @@ define(function (require) {
       //
       //----------------------------------
 
-      getRenderingContext: function () {
+      getRenderingContextAdditions: function () {
         var width = Math.max(this.dimensions.width / cols, max);
         var additions = {
           width: width
         };
-        var defaultContext = Section.prototype.getRenderingContext.call(this);
-        return _.extend({}, defaultContext, additions);
+        return additions;
       },
 
       draw: function () {
