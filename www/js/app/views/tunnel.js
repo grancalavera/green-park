@@ -37,7 +37,7 @@ define(function (require) {
       },
 
       draw: function () {
-        this.drawCanvas(this.$('canvas')[0]);
+        this.drawCanvas(this.$('canvas')[0], this.renderingContext.tiles[0]);
       }
 
     });

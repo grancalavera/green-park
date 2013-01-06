@@ -13,8 +13,8 @@ define(function (require) {
     var cPicadilly = 'rgb(35, 76, 166)';
     var cJubilee = 'rgb(123, 132, 143)';
     var cWhite = 'rgb(225,223,214)';
-    var side = 20;
-    var gap = 2;
+    var side = 21;
+    var gap = 1;
     var cell = side + gap;
     var footerHeight = 60;
 
@@ -87,7 +87,7 @@ define(function (require) {
         var dimensions = getDimenstions();
         if (this.dimensions.toString() !== dimensions.toString()) {
           this.dimensions = dimensions;
-          this.renderingContext = this.getRenderingContexts();
+          this.renderingContext = this.getRenderingContext();
           this.$el.html(this.template(this.renderingContext));
           this.draw();
         }
@@ -135,8 +135,7 @@ define(function (require) {
         ctx.fillStyle = tile.s;
         ctx.fillRect (tile.x, tile.y, tile.w, tile.h);
       },
-      drawCanvas: function (canvas) {
-        var tiles = this.renderingContext.tiles;
+      drawCanvas: function (canvas, tiles) {
         var ctx = canvas.getContext('2d');
         if(ctx) {
           _.each(tiles, function (tile) {
@@ -150,9 +149,9 @@ define(function (require) {
       getRenderingContextAdditions: function () {
         throw(new Error('Section.getRenderingContextAdditions: getRenderingContextAdditions() must be implemented in a sub-module.'));
       },
-      getRenderingContexts: function () {
+      getRenderingContext: function () {
 
-        var width, height, cols, rows, hOff, vOff, tiles;
+        var width, height, cols, rows, hOff, vOff, tiles = [];
         var from = defaultNumber(this.options.from, 0);
         var to = defaultNumber(this.options.to, 1);
 
@@ -170,7 +169,13 @@ define(function (require) {
         hOff = Math.floor((width - (cell * cols)) / 2);
         vOff = Math.floor((height - (cell * rows)) / 2);
 
-        tiles = this.getTiles(cols, rows, hOff, vOff, from, to);
+        if (rctx.isStart) {
+          tiles.push(this.getTiles(cols, rows, hOff, vOff, 1, 1));
+          tiles.push(this.getTiles(cols, rows, hOff, vOff, 0, 0));
+        } else {
+          tiles.push(this.getTiles(cols, rows, hOff, vOff, from, to));
+        }
+
 
         rctx.tiles = tiles;
         return rctx;

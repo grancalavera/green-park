@@ -33,7 +33,7 @@ define(function (require) {
       //----------------------------------
 
       getRenderingContextAdditions: function () {
-        var width = 170;
+        var width = 220;
         var additions = {
           width: width,
           isStart: true
@@ -43,8 +43,8 @@ define(function (require) {
 
       draw: function () {
         var canvases = this.$('canvas');
-        this.drawCanvas(canvases[0]);
-        this.drawCanvas(canvases[1]);
+        this.drawCanvas(canvases[0], this.renderingContext.tiles[0]);
+        this.drawCanvas(canvases[1], this.renderingContext.tiles[1]);
       }
 
     });

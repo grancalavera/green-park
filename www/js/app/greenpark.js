@@ -10,7 +10,7 @@ define(function (require) {
     var _ = require('underscore');
     var walk = require('app/state/walk');
 
-    var sections = 11;
+    var sections = 7;
     var transitionEvents = [
       'transitionend',
       'webkitTransitionEnd'
