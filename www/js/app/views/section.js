@@ -13,10 +13,11 @@ define(function (require) {
     var cPicadilly = 'rgb(35, 76, 166)';
     var cJubilee = 'rgb(123, 132, 143)';
     var cWhite = 'rgb(225,223,214)';
-    var side = 21;
+    var side = 3;
     var gap = 1;
     var cell = side + gap;
     var footerHeight = 60;
+    var paintOdds = 0.1;
 
     // odds = 1 is always true
     // odds = 0 is always false
@@ -29,7 +30,7 @@ define(function (require) {
       };
     }
 
-    var paintTile = biasedCoin(0.20);
+    var paintTile = biasedCoin(paintOdds);
 
     var translate = function ($el, dir, animated) {
       var distance = $win.width() * dir;

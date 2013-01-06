@@ -10,7 +10,7 @@ define(function (require) {
     var _ = require('underscore');
     var walk = require('app/state/walk');
 
-    var sections = 7;
+    var sections = 11;
     var transitionEvents = [
       'transitionend',
       'webkitTransitionEnd'
@@ -27,14 +27,6 @@ define(function (require) {
     //--------------------------------------------------------------------------
 
     var GreenPark = Backbone.View.extend({
-
-      //----------------------------------
-      //
-      // State
-      //
-      //----------------------------------
-
-      whereTo: '',
 
       //----------------------------------
       //
