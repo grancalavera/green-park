@@ -1,0 +1,31 @@
+@signRad:3px;
+
+.undergroundFonts {
+  font-family:P22Underground-Bold, Lato, sans-serif;
+  font-weight:bold;
+}
+
+.signShadow {
+  .box-shadow(1px 1px 5px fade(@undDarkGray, 70%));
+}
+
+.signShadowHover {
+  .box-shadow(1px 1px 10px fade(@undDarkGray, 90%));
+}
+
+.signCorners {
+  .border-radius(@signRad);
+}
+
+.lineCorners {
+  .border-top-right-radius(@signRad);
+  .border-top-left-radius(@signRad);
+}
+
+.transitionTransform(@transform) {
+  .transition(-webkit-transform @transform);
+  .transition(   -moz-transform @transform);
+  .transition(    -ms-transform @transform);
+  .transition(     -o-transform @transform);
+  .transition(        transform @transform);
+}

@@ -1,0 +1,47 @@
+#green-park {
+  overflow: hidden;
+}
+
+#green-park,
+#green-park > section,
+#green-park .front,
+#green-park .back {
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#green-park .front {
+  z-index: 1;
+}
+
+#green-park .back {
+  z-index: 0;
+}
+
+
+#green-park .tunnel .container {
+    margin: 0 15px;
+}
+
+#green-park .start {
+  canvas:nth-child(1) {
+    .pull-left;
+  }
+  canvas:nth-child(2) {
+    .pull-right;
+  }
+  img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    border: 0;
+  }
+}
+
+section.animated {
+  .transitionTransform(1.3s ease-in-out);
+}

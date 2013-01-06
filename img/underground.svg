@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_flows "http://ns.adobe.com/Flows/1.0/">
+]>
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" width="350px" height="350px" viewBox="0 0 350 350" overflow="visible" enable-background="new 0 0 350 350"
+	 xml:space="preserve">
+<defs>
+</defs>
+<rect fill="#FFFFFF" width="350" height="350"/>
+<path fill="#DD4C13" d="M294.102,147.65h30.494v49.069h-30.494c-13.168,57.882-61.1,96.937-118.986,96.937
+	c-57.881,0-106.056-39.259-118.96-96.937H25.398V147.65h30.734c13.164-57.879,61.104-96.937,118.984-96.937
+	C233.002,50.713,280.934,89.771,294.102,147.65 M100.651,196.72c11.871,33.215,40.407,53.855,74.465,53.855
+	c34.059,0,62.592-20.64,74.464-53.855H100.651z M249.581,147.65c-11.873-33.217-40.406-53.854-74.464-53.854
+	c-34.058,0-62.594,20.637-74.465,53.854H249.581z"/>
+<rect x="25.398" y="147.65" fill="#234CA6" width="299.198" height="49.069"/>
+</svg>
