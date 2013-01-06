@@ -7,9 +7,9 @@ define(function (require) {
     var $ = require('jquery');
     var Backbone = require('backbone');
     var _ = require('underscore');
+    var map = require('app/utils/map');
 
     var $win = $(window);
-
     var cPicadilly = 'rgb(35, 76, 166)';
     var cJubilee = 'rgb(123, 132, 143)';
     var cWhite = 'rgb(225,223,214)';
@@ -109,10 +109,11 @@ define(function (require) {
       // Section stuff
       //
       //----------------------------------
-      getTiles: function (cols, rows, hOff, vOff, scale) {
+      getTiles: function (cols, rows, hOff, vOff, from, to) {
         return _.reduce(_.range(0, cols), function (ts, cIndex, cIndex2, cs) {
                   var col = _.reduce(_.range(0, rows), function (cl, rIndex, rIndex2, rw) {
-                    var position;
+                    var odds;
+                    var mapped;
                     var tile = {
                       x: cIndex * cell + hOff,
                       y: rIndex * cell + vOff,
@@ -122,9 +123,9 @@ define(function (require) {
                     };
                     if (paintTile()) {
                       // for jubilee
-                      position = cIndex / (cs.length  - 1);
-                      console.log('position:', position, 'odss / scale: ', position / scale);
-                      tile.s = biasedCoin(position)() ? cJubilee : cPicadilly;
+                      odds = cIndex / (cs.length  - 1);
+                      mapped = map(odds, 0, 1, from, to);
+                      tile.s = biasedCoin(mapped)() ? cJubilee : cPicadilly;
                     }
                     cl.push(tile);
                     return cl;
@@ -171,7 +172,7 @@ define(function (require) {
         hOff = Math.floor((width - (cell * cols)) / 2);
         vOff = Math.floor((height - (cell * rows)) / 2);
 
-        tiles = this.getTiles(cols, rows, hOff, vOff, 1);
+        tiles = this.getTiles(cols, rows, hOff, vOff, 0, 0);
 
         rctx.tiles = tiles;
         return rctx;
