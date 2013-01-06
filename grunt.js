@@ -84,7 +84,7 @@ module.exports = function(grunt) {
         options: {
           appDir: 'www',
           mainConfigFile: 'www/js/app.js',
-          dir: '../green-park-built-',
+          dir: '../built',
           modules: [
             {name: 'app/greenpark'}
           ],
@@ -105,6 +105,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-html');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-volo');
 
   grunt.registerTask('default', 'server lint less handlebars reload qunit watch');
   grunt.registerTask('dist', 'htmllint lint qunit less handlebars requirejs');
