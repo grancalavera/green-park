@@ -89,7 +89,7 @@ define(function (require) {
         var dimensions = getDimenstions();
         if (this.dimensions.toString() !== dimensions.toString()) {
           this.dimensions = dimensions;
-          this.renderingContext = this.getRenderingContext();
+          this.renderingContext = this.getRenderingContexts();
           this.$el.html(this.template(this.renderingContext));
           this.draw();
         }
@@ -109,6 +109,29 @@ define(function (require) {
       // Section stuff
       //
       //----------------------------------
+      getTiles: function (cols, rows, hOff, vOff, scale) {
+        return _.reduce(_.range(0, cols), function (ts, cIndex, cIndex2, cs) {
+                  var col = _.reduce(_.range(0, rows), function (cl, rIndex, rIndex2, rw) {
+                    var position;
+                    var tile = {
+                      x: cIndex * cell + hOff,
+                      y: rIndex * cell + vOff,
+                      w: side,
+                      h: side,
+                      s: cWhite
+                    };
+                    if (paintTile()) {
+                      // for jubilee
+                      position = cIndex / (cs.length  - 1);
+                      console.log('position:', position, 'odss / scale: ', position / scale);
+                      tile.s = biasedCoin(position)() ? cJubilee : cPicadilly;
+                    }
+                    cl.push(tile);
+                    return cl;
+                  }, []);
+                  return ts.concat(col);
+                }, []);
+      },
       drawTile: function (ctx, tile) {
         ctx.fillStyle = tile.s;
         ctx.fillRect (tile.x, tile.y, tile.w, tile.h);
@@ -128,7 +151,7 @@ define(function (require) {
       getRenderingContextAdditions: function () {
         throw(new Error('Section.getRenderingContextAdditions: getRenderingContextAdditions() must be implemented in a sub-module.'));
       },
-      getRenderingContext: function () {
+      getRenderingContexts: function () {
 
         var width, height, cols, rows, hOff, vOff, tiles;
         var from = defaultNumber(this.options.from, 0);
@@ -148,25 +171,7 @@ define(function (require) {
         hOff = Math.floor((width - (cell * cols)) / 2);
         vOff = Math.floor((height - (cell * rows)) / 2);
 
-        tiles = _.reduce(_.range(0, cols), function (ts, cIndex, cIndex2, cs) {
-          var col = _.reduce(_.range(0, rows), function (cl, rIndex, rIndex2, rw) {
-            var odds, tile = {
-              x: cIndex * cell + hOff,
-              y: rIndex * cell + vOff,
-              w: side,
-              h: side,
-              s: cWhite
-            };
-            if (paintTile()) {
-              // for jubilee
-              odds = cIndex / (cs.length  - 1);
-              tile.s = biasedCoin(odds)() ? cJubilee : cPicadilly;
-            }
-            cl.push(tile);
-            return cl;
-          }, []);
-          return ts.concat(col);
-        }, []);
+        tiles = this.getTiles(cols, rows, hOff, vOff, 1);
 
         rctx.tiles = tiles;
         return rctx;

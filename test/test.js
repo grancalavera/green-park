@@ -37,7 +37,8 @@
   });
   QUnit.config.autostart = false;
   var allTests = [
-    'tests/green-park-tests'
+    'tests/green-park-tests',
+    'tests/map-range-tests'
     // add more tests here...
   ];
   requirejs(allTests, function () {
