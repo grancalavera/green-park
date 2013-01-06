@@ -13,8 +13,8 @@ define(function (require) {
     var cPicadilly = 'rgb(35, 76, 166)';
     var cJubilee = 'rgb(123, 132, 143)';
     var cWhite = 'rgb(225,223,214)';
-    var side = 3;
-    var gap = 1;
+    var side = 6;
+    var gap = 2;
     var cell = side + gap;
     var footerHeight = 60;
     var paintOdds = 0.1;

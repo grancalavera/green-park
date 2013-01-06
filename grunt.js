@@ -78,6 +78,25 @@ module.exports = function(grunt) {
           "www/js/templates/dist/templates.js": "www/js/templates/src/**/*.hbs"
         }
       }
+    },
+    requirejs: {
+      dist: {
+        options: {
+          appDir: 'www',
+          mainConfigFile: 'www/js/app.js',
+          dir: '../green-park-built',
+          modules: [
+            {name: 'app/greenpark'}
+          ],
+          optimize: 'uglify',
+          uglify: {
+            toplevel: true,
+            ascii_only: true,
+            beautify: true,
+            max_line_length: 1000
+          }
+        }
+      }
     }
   });
 
@@ -85,5 +104,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-html');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
+
   grunt.registerTask('default', 'server lint less handlebars reload qunit watch');
+  grunt.registerTask('dist', 'htmllint lint qunit less handlebars requirejs');
 };
