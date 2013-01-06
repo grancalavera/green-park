@@ -83,8 +83,6 @@ define(function (require) {
       //----------------------------------
 
       tagName: 'section',
-      initialize: function () {
-      },
       render: function() {
         var dimensions = getDimenstions();
         if (this.dimensions.toString() !== dimensions.toString()) {
@@ -172,7 +170,7 @@ define(function (require) {
         hOff = Math.floor((width - (cell * cols)) / 2);
         vOff = Math.floor((height - (cell * rows)) / 2);
 
-        tiles = this.getTiles(cols, rows, hOff, vOff, 0, 0);
+        tiles = this.getTiles(cols, rows, hOff, vOff, from, to);
 
         rctx.tiles = tiles;
         return rctx;
