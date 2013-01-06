@@ -84,7 +84,7 @@ module.exports = function(grunt) {
         options: {
           appDir: 'www',
           mainConfigFile: 'www/js/app.js',
-          dir: '../green-park-built',
+          dir: '../green-park-built-',
           modules: [
             {name: 'app/greenpark'}
           ],
