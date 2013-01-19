@@ -4751,7 +4751,7 @@ v, i.mq = N, i.hasEvent = C, i.testProp = function(e) {
         };
     }
     var t = e("jquery"), n = e("backbone"), r = e("underscore"), i = e("app/utils/map"), s = t(window), o = "rgb(35, 76, 166)", u = "rgb(123, 132, 143)"
-, a = "rgb(225,223,214)", f = 6, l = 2, c = f + l, h = 60, p = .1, v = d(p), m = function(e, t, n) {
+, a = "rgb(225,223,214)", f = 9, l = 2, c = f + l, h = 60, p = .1, v = d(p), m = function(e, t, n) {
         var r = s.width() * t;
         n ? e.addClass("animated") : e.removeClass("animated"), e.css("transform", "translateX(" + r + "px)");
     }, g = function() {
@@ -6378,7 +6378,7 @@ invokePartial: Handlebars.VM.invokePartial,
     var s = "", o, u = this;
     s += '<div class="front">\n  <div class="container">\n    <header class="page-header">\n      <h1>Green&nbsp;Park Station</h1>\n    </header>\n    ', o = t, o = u.invokePartial(r.nav, "nav", o, n, r);
     if (o || o === 0) s += o;
-    s += '\n  </div>\n  <a href="https://github.com/grancalavera/green-park">\n    <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub">\n  </a>\n</div>\n<div class="back">\n  '
+    s += '\n    <h3>Can you spot the secret hidden in Green Park Station walls?</h3>\n    <p>Go <a href="http://platformtworca.wordpress.com/2009/03/23/secret-in-green-park-station/" target="_blank">here</a> for a hint.</p>\n  </div>\n  <a href="https://github.com/grancalavera/green-park">\n    <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub">\n  </a>\n</div>\n<div class="back">\n  '
 , o = t, o = u.invokePartial(r.canvas, "canvas", o, n, r);
     if (o || o === 0) s += o;
     s += "\n  ", o = t, o = u.invokePartial(r.canvas, "canvas", o, n, r);
@@ -6496,7 +6496,7 @@ return e += 1, e < this.count ? e : 0;
         }
     };
 }), define("app/greenpark", [ "require", "jquery", "backbone", "modernizr", "underscore", "app/state/walk" ], function(e) {
-    var t = e("jquery"), n = e("backbone"), r = e("modernizr"), i = e("underscore"), s = e("app/state/walk"), o = 11, u = [ "transitionend", "webkitTransitionEnd" ].join(" "), a = r.touch, f = t(window), l = t(document), c = "#green-park", h = n.View.extend({
+    var t = e("jquery"), n = e("backbone"), r = e("modernizr"), i = e("underscore"), s = e("app/state/walk"), o = 5, u = [ "transitionend", "webkitTransitionEnd" ].join(" "), a = r.touch, f = t(window), l = t(document), c = "#green-park", h = n.View.extend({
         el: document
 .body,
         events: {

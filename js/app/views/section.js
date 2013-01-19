@@ -4,7 +4,7 @@ define([ "require", "jquery", "backbone", "underscore", "app/utils/map" ], funct
             return e === 0 ? !1 : Math.random() <= e ? !0 : !1;
         };
     }
-    var t = e("jquery"), n = e("backbone"), r = e("underscore"), i = e("app/utils/map"), s = t(window), o = "rgb(35, 76, 166)", u = "rgb(123, 132, 143)", a = "rgb(225,223,214)", f = 6, l = 2, c = f + l, h = 60, p = .1, v = d(p), m = function(e, t, n) {
+    var t = e("jquery"), n = e("backbone"), r = e("underscore"), i = e("app/utils/map"), s = t(window), o = "rgb(35, 76, 166)", u = "rgb(123, 132, 143)", a = "rgb(225,223,214)", f = 9, l = 2, c = f + l, h = 60, p = .1, v = d(p), m = function(e, t, n) {
         var r = s.width() * t;
         n ? e.addClass("animated") : e.removeClass("animated"), e.css("transform", "translateX(" + r + "px)");
     }, g = function() {
