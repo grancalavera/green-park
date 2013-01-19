@@ -77,7 +77,7 @@ dimensions: {},
             };
             return l = r.extend(l, this.getRenderingContextAdditions()), e = l.width, t = l.height, n = Math.floor(e / c), i = Math.floor(t / c), s = Math.floor((e - c * n) / 2), o = Math.floor((t - c * i) / 2), l.isStart ? (u.push(this.getTiles(n, i, s, o, 1, 1)), u.push(this.getTiles(n, i, s, o, 0, 0))) : u.push(this.getTiles(n, i, s, o, a, f)), l.tiles = u, l;
         },
-        toPicadilly: function(e) {
+        toPiccadilly: function(e) {
             m(this.$el, -1, e);
         },
         toJubilee: function(e) {

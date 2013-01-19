@@ -4824,7 +4824,7 @@ var n = e.getContext("2d");
             return l = r.extend(l, this.getRenderingContextAdditions()), e = l.width, t = l.height, n = Math.floor(e / c), i = Math.floor(t / c), s = Math.floor((e - c * n) / 2), o = Math.floor((t - c * i) / 2), l.isStart ? (u.push(this.getTiles(n, i, s, o, 1, 1)), u.push(this.getTiles
 (n, i, s, o, 0, 0))) : u.push(this.getTiles(n, i, s, o, a, f)), l.tiles = u, l;
         },
-        toPicadilly: function(e) {
+        toPiccadilly: function(e) {
             m(this.$el, -1, e);
         },
         toJubilee: function(e) {
@@ -6372,7 +6372,7 @@ invokePartial: Handlebars.VM.invokePartial,
         hash: {}
     }) : (o = t.height, o = typeof o === a ? o() : o), s += f(o) + '"></canvas>\n', s;
 })), Handlebars.registerPartial("nav", Handlebars.template(function(e, t, n, r, i) {
-    return n = n || e.helpers, '<nav>\n  <div class="platform picadilly">\n    <div class="line"></div>\n    <h2><span class="arrow"></span>Picadilly line</h2>\n  </div>\n  <div class="platform jubilee">\n    <div class="line"></div>\n    <h2>Jubilee line<span class="arrow"></span></h2>\n  </div>\n</nav>\n';
+    return n = n || e.helpers, '<nav>\n  <div class="platform piccadilly">\n    <div class="line"></div>\n    <h2><span class="arrow"></span>Piccadilly line</h2>\n  </div>\n  <div class="platform jubilee">\n    <div class="line"></div>\n    <h2>Jubilee line<span class="arrow"></span></h2>\n  </div>\n</nav>\n';
 })), this.JST.start = Handlebars.template(function(e, t, n, r, i) {
     n = n || e.helpers, r = r || e.partials;
     var s = "", o, u = this;
@@ -6470,9 +6470,9 @@ return e += 1, e < this.count ? e : 0;
 }), define("app/state/walk", [ "require", "jquery", "underscore", "app/state/sections" ], function(e) {
     var t = e("jquery"), n = e("underscore"), r = e("app/state/sections"), i = {
         init: function(e, t) {
-            return this.scrollPos = e, this.sections = t, this.positions = this.sections.positions(e), this.next = this.sections.next(e), this.prev = this.sections.prev(e), this.picadilly = this.sections.getSection(this.positions[0]), this.center = this.sections.getSection(this.positions[1]), this.jubilee = this.sections.getSection(this.positions[2]), this;
+            return this.scrollPos = e, this.sections = t, this.positions = this.sections.positions(e), this.next = this.sections.next(e), this.prev = this.sections.prev(e), this.piccadilly = this.sections.getSection(this.positions[0]), this.center = this.sections.getSection(this.positions[1]), this.jubilee = this.sections.getSection(this.positions[2]), this;
         },
-        toPicadilly
+        toPiccadilly
 : function() {
             return u(this);
         },
@@ -6480,7 +6480,7 @@ return e += 1, e < this.count ? e : 0;
             return o(this);
         },
         toString: function() {
-            var e = this.picadilly.toString() + " - " + this.center.toString() + " - " + this.jubilee.toString();
+            var e = this.piccadilly.toString() + " - " + this.center.toString() + " - " + this.jubilee.toString();
             return e;
         }
     }, s = function(e, t) {
@@ -6500,7 +6500,7 @@ return e += 1, e < this.count ? e : 0;
         el: document
 .body,
         events: {
-            "click .platform.picadilly": "picadilly_clickHandler",
+            "click .platform.piccadilly": "piccadilly_clickHandler",
             "click .platform.jubilee": "jubilee_clickHandler"
         },
         initialize: function() {
@@ -6519,26 +6519,26 @@ return e += 1, e < this.count ? e : 0;
             this.$(c).prepend(t);
         },
         appendAll: function() {
-            this.append(this.walk.picadilly), this.append(this.walk.center), this.append(this.walk.jubilee);
+            this.append(this.walk.piccadilly), this.append(this.walk.center), this.append(this.walk.jubilee);
         },
-        updateLayout: function() 
-{
-            this.walk.picadilly.$el.removeClass("center"), this.walk.center.$el.addClass("center"), this.walk.jubilee.$el.removeClass("center"), this.walk.picadilly.toPicadilly(), this.walk.center.toCenter(), this.walk.jubilee.toJubilee(), this.walk.picadilly.render(), this.walk.center.render(), this.walk.jubilee.render();
+        updateLayout: function(
+) {
+            this.walk.piccadilly.$el.removeClass("center"), this.walk.center.$el.addClass("center"), this.walk.jubilee.$el.removeClass("center"), this.walk.piccadilly.toPiccadilly(), this.walk.center.toCenter(), this.walk.jubilee.toJubilee(), this.walk.piccadilly.render(), this.walk.center.render(), this.walk.jubilee.render();
         },
-        toPicadilly: function(e) {
-            var t = e.toPicadilly();
-            return this.append(t.picadilly), e.jubilee.remove(), t;
+        toPiccadilly: function(e) {
+            var t = e.toPiccadilly();
+            return this.append(t.piccadilly), e.jubilee.remove(), t;
         },
         toJubilee: function(e) {
             var t = e.toJubilee();
-            return this.append(t.jubilee), e.picadilly.remove(), t;
+            return this.append(t.jubilee), e.piccadilly.remove(), t;
         },
-        picadilly_clickHandler: function(e) {
-            this.afterTransition(this.toPicadilly), this.walk.center.toJubilee(!0), this.walk.picadilly.toCenter(!0);
+        piccadilly_clickHandler: function(e) {
+            this.afterTransition(this.toPiccadilly), this.walk.center.toJubilee(!0), this.walk.piccadilly.toCenter(!0);
         },
         jubilee_clickHandler: function(e) {
-            this.afterTransition(this.toJubilee), this.walk.center.toPicadilly(!0), this.walk.jubilee.toCenter(!0);
+            this.afterTransition(this.toJubilee), this.walk.center.toPiccadilly(!0), this.walk.jubilee.toCenter(!0);
         }
-    }), p = new h({}
-);
+    })
+, p = new h({});
 });;

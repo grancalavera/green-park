@@ -5174,7 +5174,7 @@ nav:after {
 nav:after {
   clear: both;
 }
-nav .picadilly {
+nav .piccadilly {
   float: left;
 }
 nav .jubilee {
@@ -5206,10 +5206,10 @@ nav .jubilee {
   margin-left: 10px;
   background-position: -60px 0;
 }
-.platform.picadilly .line {
+.platform.piccadilly .line {
   background-color: #234ca6;
 }
-.platform.picadilly .arrow {
+.platform.piccadilly .arrow {
   margin-right: 10px;
   background-position: -180px 0;
 }
