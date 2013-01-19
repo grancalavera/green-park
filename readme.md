@@ -26,4 +26,3 @@ which is a simple project workflow I wrote using [Grunt 0.3.17](http://gruntjs.c
 ## Do you like it?
 
 Follow me on Tweeter :) [@wasabilion](http://twitter.com/wasabilion)
-

@@ -80,11 +80,11 @@ module.exports = function(grunt) {
       }
     },
     requirejs: {
-      dist: {
+      build: {
         options: {
           appDir: 'www',
           mainConfigFile: 'www/js/app.js',
-          dir: '../built',
+          dir: 'www-built',
           modules: [
             {name: 'app/greenpark'}
           ],
@@ -108,5 +108,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-volo');
 
   grunt.registerTask('default', 'server lint less handlebars reload qunit watch');
-  grunt.registerTask('dist', 'htmllint lint qunit less handlebars requirejs');
+  grunt.registerTask('build', 'htmllint lint qunit less handlebars requirejs');
 };
