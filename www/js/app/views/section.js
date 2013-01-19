@@ -10,7 +10,7 @@ define(function (require) {
     var map = require('app/utils/map');
 
     var $win = $(window);
-    var cPicadilly = 'rgb(35, 76, 166)';
+    var cPiccadilly = 'rgb(35, 76, 166)';
     var cJubilee = 'rgb(123, 132, 143)';
     var cWhite = 'rgb(225,223,214)';
     var side = 6;
@@ -124,7 +124,7 @@ define(function (require) {
                       // for jubilee
                       odds = cIndex / (cs.length  - 1);
                       mapped = map(odds, 0, 1, from, to);
-                      tile.s = biasedCoin(mapped)() ? cJubilee : cPicadilly;
+                      tile.s = biasedCoin(mapped)() ? cJubilee : cPiccadilly;
                     }
                     cl.push(tile);
                     return cl;
@@ -181,7 +181,7 @@ define(function (require) {
         rctx.tiles = tiles;
         return rctx;
       },
-      toPicadilly: function (animated) {
+      toPiccadilly: function (animated) {
         translate(this.$el, -1, animated);
       },
 

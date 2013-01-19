@@ -36,7 +36,7 @@ define(function (require) {
 
       el: document.body,
       events: {
-        'click .platform.picadilly': 'picadilly_clickHandler',
+        'click .platform.piccadilly': 'piccadilly_clickHandler',
         'click .platform.jubilee': 'jubilee_clickHandler'
       },
       initialize: function () {
@@ -73,31 +73,31 @@ define(function (require) {
         this.$(container).prepend(el);
       },
       appendAll: function () {
-        this.append(this.walk.picadilly);
+        this.append(this.walk.piccadilly);
         this.append(this.walk.center);
         this.append(this.walk.jubilee);
       },
       updateLayout: function () {
-        this.walk.picadilly.$el.removeClass('center');
+        this.walk.piccadilly.$el.removeClass('center');
         this.walk.center.$el.addClass('center');
         this.walk.jubilee.$el.removeClass('center');
-        this.walk.picadilly.toPicadilly();
+        this.walk.piccadilly.toPiccadilly();
         this.walk.center.toCenter();
         this.walk.jubilee.toJubilee();
-        this.walk.picadilly.render();
+        this.walk.piccadilly.render();
         this.walk.center.render();
         this.walk.jubilee.render();
       },
-      toPicadilly: function (fromWalk) {
-        var toWalk = fromWalk.toPicadilly();
-        this.append(toWalk.picadilly);
+      toPiccadilly: function (fromWalk) {
+        var toWalk = fromWalk.toPiccadilly();
+        this.append(toWalk.piccadilly);
         fromWalk.jubilee.remove();
         return toWalk;
       },
       toJubilee: function (fromWalk) {
         var toWalk = fromWalk.toJubilee();
         this.append(toWalk.jubilee);
-        fromWalk.picadilly.remove();
+        fromWalk.piccadilly.remove();
         return toWalk;
       },
 
@@ -107,14 +107,14 @@ define(function (require) {
       //
       //----------------------------------
 
-      picadilly_clickHandler: function (event) {
-        this.afterTransition(this.toPicadilly);
+      piccadilly_clickHandler: function (event) {
+        this.afterTransition(this.toPiccadilly);
         this.walk.center.toJubilee(true);
-        this.walk.picadilly.toCenter(true);
+        this.walk.piccadilly.toCenter(true);
       },
       jubilee_clickHandler: function (event) {
         this.afterTransition(this.toJubilee);
-        this.walk.center.toPicadilly(true);
+        this.walk.center.toPiccadilly(true);
         this.walk.jubilee.toCenter(true);
       }
 

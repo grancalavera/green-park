@@ -27,19 +27,19 @@ define(function (require) {
         this.positions = this.sections.positions(scrollPos);
         this.next = this.sections.next(scrollPos);
         this.prev = this.sections.prev(scrollPos);
-        this.picadilly = this.sections.getSection(this.positions[0]);
+        this.piccadilly = this.sections.getSection(this.positions[0]);
         this.center = this.sections.getSection(this.positions[1]);
         this.jubilee = this.sections.getSection(this.positions[2]);
         return this;
       },
-      toPicadilly: function () {
-        return walkToPicadilly(this);
+      toPiccadilly: function () {
+        return walkToPiccadilly(this);
       },
       toJubilee: function () {
         return walkToJubilee(this);
       },
       toString: function () {
-        var str = this.picadilly.toString() +
+        var str = this.piccadilly.toString() +
           ' - ' + this.center.toString() +
           ' - ' + this.jubilee.toString();
         return str;
@@ -62,7 +62,7 @@ define(function (require) {
     };
 
     // Same as 'walk right'
-    var walkToPicadilly = function(fromWalk) {
+    var walkToPiccadilly = function(fromWalk) {
       return createWalk(fromWalk.prev, fromWalk.sections);
     };
 

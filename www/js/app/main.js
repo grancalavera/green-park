@@ -28,7 +28,7 @@ define(function(require) {
     var win = $(window);
     var doc = $(document);
     var cnt = $('#container');
-    var picadilly = 'rgb(33, 23, 102)';
+    var piccadilly = 'rgb(33, 23, 102)';
     var jubilee = 'rgb(85, 87, 71)';
 
     //--------------------------------------------------------------------------
@@ -95,9 +95,9 @@ define(function(require) {
             paint: paintMosaic()
           }, oddsForJubilee;
           if (tile.paint) {
-            // from picadilly to jubilee, so the odds are for jubilee
+            // from piccadilly to jubilee, so the odds are for jubilee
             oddsForJubilee = colIndex / (cols.length - 1);
-            tile.color = biasedCoin(oddsForJubilee)() ? jubilee : picadilly;
+            tile.color = biasedCoin(oddsForJubilee)() ? jubilee : piccadilly;
           }
           col.push(tile);
           return col;
