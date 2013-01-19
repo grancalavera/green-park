@@ -97,6 +97,16 @@ module.exports = function(grunt) {
           }
         }
       }
+    },
+    copy: {
+      ghpages: {
+        options: {
+          cwd: '.'
+        },
+        files: {
+          '../green-park-built/': ['./www-built/**/*']
+        }
+      }
     }
   });
 
@@ -106,7 +116,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-html');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-volo');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.registerTask('default', 'server lint less handlebars reload qunit watch');
-  grunt.registerTask('build', 'htmllint lint qunit less handlebars requirejs');
+  grunt.registerTask('build', 'htmllint lint qunit less handlebars requirejs copy:ghpages');
 };
