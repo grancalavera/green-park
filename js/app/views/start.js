@@ -5,7 +5,7 @@ define([ "require", "jquery", "underscore", "app/views/section", "templates" ], 
         viewId: "app/views/start",
         className: "start",
         getRenderingContextAdditions: function() {
-            var e = 220, t = {
+            var e = this.dimensions.width < 1024 ? 90 : 200, t = {
                 width: e,
                 isStart: !0
             };
