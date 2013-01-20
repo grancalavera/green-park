@@ -1,0 +1,50 @@
+// aiming for a max with of 320px
+@absMax: 320px;
+@sidesWidth: 40px;
+@smallContentWidth: @absMax - (@sidesWidth * 2);
+
+@media (max-width: 1023px) {
+
+  h1, h2, h3 { line-height: @baseLineHeight * 1.5; }
+  h1 { font-size: @baseFontSize * 1.8; }
+  h2 { font-size: @baseFontSize * 1.6; }
+  h3 { font-size: @baseFontSize * 1.4; }
+
+  section.start .container,
+  section.tunnel .container,
+  footer .container {
+      width: @smallContentWidth;
+  }
+
+  footer .container {
+    font-size: @baseFontSize * 0.7;
+  }
+
+  section.tunnel .container {
+    margin: 0 auto;
+  }
+  .page-header {
+    margin: 5px 0 0;
+  }
+
+  nav {
+    margin: 5px auto;
+    .piccadilly, .jubilee {
+      float: none;
+    }
+    .platform {
+      width: @smallContentWidth;
+      margin-bottom: 6px;
+      h2 {
+        padding: 0 @signSidePadding * 0.5 @signBottomPadding * 0.5;
+        .arrow {
+          bottom: -6px;
+        }
+      }
+    }
+  }
+
+  section.animated {
+    .transitionTransform(0.7s ease-in-out);
+  }
+}

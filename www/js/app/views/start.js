@@ -33,7 +33,7 @@ define(function (require) {
       //----------------------------------
 
       getRenderingContextAdditions: function () {
-        var width = 220;
+        var width = 160;
         var additions = {
           width: width,
           isStart: true

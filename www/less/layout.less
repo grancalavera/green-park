@@ -1,0 +1,29 @@
+body {
+  font-weight:300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight:400;
+}
+
+footer {
+  height: @footerHeight;
+  background-color: @white;
+  position: fixed;
+  z-index: 1000;
+  bottom:0;
+  width: 100%;
+  .container .credit {
+    margin: 20px 0;
+  }
+}
+
+section .container,
+footer .container {
+  width: 680px;
+}
+
+section.tunnel .container {
+  margin: 0 15px;
+  width: auto;
+}

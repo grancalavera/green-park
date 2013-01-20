@@ -4,44 +4,7 @@
 @import "variables";
 @import "mixins";
 @import "bootstrap-overrides";
+@import "layout";
 @import "signs";
 @import "sections";
-
-body {
-  font-weight:300;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight:400;
-}
-
-footer {
-  height: @footerHeight;
-  background-color: @white;
-  position: fixed;
-  z-index: 1000;
-  bottom:0;
-  width: 100%;
-  .container .credit {
-    margin: 20px 0;
-  }
-}
-
-section .container, footer .container {
-  width: auto;
-}
-
-section.start .container,
-footer .container {
-    max-width: 680px;
-}
-
-@media (max-width: 767px) {
-  body > footer {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
+@import "responsive";
