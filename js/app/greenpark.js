@@ -4745,28 +4745,29 @@ v, i.mq = N, i.hasEvent = C, i.testProp = function(e) {
     };
     return e;
 }), define("app/views/section", [ "require", "jquery", "backbone", "underscore", "app/utils/map" ], function(e) {
-    function c(e) {
+    function l(e) {
         return function() {
             return e === 0 ? !1 : Math.random() <= e ? !0 : !1;
         };
     }
     var t = e("jquery"), n = e("backbone"), r = e("underscore"), i = e("app/utils/map"), s = t(window), o = "rgb(35, 76, 166)", u = "rgb(123, 132, 143)"
-, a = "rgb(225,223,214)", f = 60, l = .1, h = c(l), p = function(e, t, n) {
+, a = "rgb(225,223,214)", f = .1, c = l(f), h = function(e, t, n) {
         var r = s.width() * t;
         n ? e.addClass("animated") : e.removeClass("animated"), e.css("transform", "translateX(" + r + "px)");
-    }, d = function() {
-        var e = s.width(), t = s.height() - f, n = e < 1024 ? 4 : 9, r = 2, i = n + r, o = {
+    }, p = function() {
+        var e = s.width(), t = e < 1024, n = t ? 30 : 60, r = s.height() - n, i = t ? 4 : 9, o = 2, u = i + o, a = {
             width: e,
-            height: t,
-            side: n,
-            gap: r,
-            cell: i,
+            height: r,
+            side: i,
+            gap: o,
+            cell: u,
+            footerHeight: n,
             toString: function() {
-                return e + "px * " + t + "px";
+                return e + "px * " + r + "px";
             }
         };
-        return o;
-    }, v = function(e, t) {
+        return a;
+    }, d = function(e, t) {
         return r.isNumber(e) ? e : t;
     };
     return n.View.extend({
@@ -4778,9 +4779,9 @@ v, i.mq = N, i.hasEvent = C, i.testProp = function(e) {
         },
         tagName: "section",
         render: function() {
-            var e = d();
-            return this.dimensions.toString() !== e.toString() && (this.dimensions = e, this.renderingContext = 
-this.getRenderingContext(), this.$el.html(this.template(this.renderingContext)), this.draw()), this;
+            var e = p();
+            return this.dimensions.toString() !== e
+.toString() && (this.dimensions = e, this.renderingContext = this.getRenderingContext(), this.$el.html(this.template(this.renderingContext)), this.draw()), this;
         },
         showPlatforms: function() {
             this.$(".platform").fadeIn();
@@ -4788,7 +4789,7 @@ this.getRenderingContext(), this.$el.html(this.template(this.renderingContext)),
         hidePlatforms: function() {
             this.$(".platform").fadeOut();
         },
-        getTiles: function(e, t, n, s, f, l) {
+        getTiles: function(e, t, n, s, f, h) {
             var p = this.dimensions.cell, d = this.dimensions.side;
             return r.reduce(r.range(0, e), function(e, v, m, g) {
                 var y = r.reduce(r.range(0, t), function(e, t, r, m) {
@@ -4799,13 +4800,13 @@ this.getRenderingContext(), this.$el.html(this.template(this.renderingContext)),
                         h: d,
                         s: a
                     };
-                    return h() && (y = v / (g.length - 1), b = i(y, 0, 1, f, l), w.s = c(b)() ? u : o), e.push(w), e;
+                    return c() && (y = v / (g.length - 1), b = i(y, 0, 1, f, h), w.s = l(b)() ? u : o), e.push(w), e;
                 }, []);
-                return e.concat(y);
+                return e.concat
+(y);
             }, []);
         },
-        drawTile: function(
-e, t) {
+        drawTile: function(e, t) {
             e.fillStyle = t.s, e.fillRect(t.x, t.y, t.w, t.h);
         },
         drawCanvas: function(e, t) {
@@ -4821,21 +4822,21 @@ e, t) {
             throw new Error("Section.getRenderingContextAdditions: getRenderingContextAdditions() must be implemented in a sub-module.");
         },
         getRenderingContext: function() {
-            var e, t, n, i, s, o, u = [], a = v(this.options.from, 0), f = v(this.options.to, 1), l = this.dimensions.cell, c = this.dimensions.side, h = {
+            var e, t, n, i, s, o, u = [], a = d(this.options.from, 0), f = d(this.options.to, 1), l = this.dimensions.cell, c = this.dimensions.side, h = {
                 width: this.dimensions.width,
                 height: this.dimensions.height
             };
-            return h = r.extend(h, this.getRenderingContextAdditions()), e = h.width, t = h.height
-, n = Math.floor(e / l), i = Math.floor(t / l), s = Math.floor((e - l * n) / 2), o = Math.floor((t - l * i) / 2), h.isStart ? (u.push(this.getTiles(n, i, s, o, 1, 1)), u.push(this.getTiles(n, i, s, o, 0, 0))) : u.push(this.getTiles(n, i, s, o, a, f)), h.tiles = u, h;
+            return h = r.extend(h, 
+this.getRenderingContextAdditions()), e = h.width, t = h.height, n = Math.floor(e / l), i = Math.floor(t / l), s = Math.floor((e - l * n) / 2), o = Math.floor((t - l * i) / 2), h.isStart ? (u.push(this.getTiles(n, i, s, o, 1, 1)), u.push(this.getTiles(n, i, s, o, 0, 0))) : u.push(this.getTiles(n, i, s, o, a, f)), h.tiles = u, h;
         },
         toPiccadilly: function(e) {
-            p(this.$el, -1, e);
+            h(this.$el, -1, e);
         },
         toJubilee: function(e) {
-            p(this.$el, 1, e);
+            h(this.$el, 1, e);
         },
         toCenter: function(e) {
-            p(this.$el, 0, e);
+            h(this.$el, 0, e);
         },
         toString: function() {
             return this.viewId;
@@ -4847,9 +4848,9 @@ e, t) {
     }, e.registerPartial = function(e, t) {
         this.partials[e] = t;
     }, e.registerHelper("helperMissing", function(e) {
-        if (arguments.length === 2) return undefined;
-        throw new Error("Could not find property '" + 
-e + "'");
+        if (arguments.length === 2
+) return undefined;
+        throw new Error("Could not find property '" + e + "'");
     });
     var t = Object.prototype.toString, n = "[object Function]";
     e.registerHelper("blockHelperMissing", function(r, i) {
@@ -4866,10 +4867,10 @@ e + "'");
             data: o
         }); else s = i(this);
         return s;
-    }), e.registerHelper("if", function(r, i) {
+    }), e.registerHelper("if", function(
+r, i) {
         var s = t.call(r);
-        return s === n && (r = r.call(this
-)), !r || e.Utils.isEmpty(r) ? i.inverse(this) : i.fn(this);
+        return s === n && (r = r.call(this)), !r || e.Utils.isEmpty(r) ? i.inverse(this) : i.fn(this);
     }), e.registerHelper("unless", function(t, n) {
         var r = n.fn, i = n.inverse;
         return n.fn = i, n.inverse = r, e.helpers["if"].call(this, t, n);
@@ -4903,11 +4904,11 @@ var e = function() {
             CONTENT: 14,
             COMMENT: 15,
             OPEN_BLOCK: 16,
-            inMustache: 17,
+            
+inMustache: 17,
             CLOSE: 18,
             OPEN_INVERSE: 19,
-            
-OPEN_ENDBLOCK: 20,
+            OPEN_ENDBLOCK: 20,
             path: 21,
             OPEN: 22,
             OPEN_UNESCAPED: 23,
@@ -4943,12 +4944,12 @@ OPEN_ENDBLOCK: 20,
             27: "DATA",
             29: "STRING",
             30: "INTEGER",
-            31: "BOOLEAN",
+            31
+: "BOOLEAN",
             34: "ID",
             35: "EQUALS",
             37: "SEP"
-        
-},
+        },
         productions_: [ 0, [ 3, 2 ], [ 4, 3 ], [ 4, 1 ], [ 4, 0 ], [ 6, 1 ], [ 6, 2 ], [ 8, 3 ], [ 8, 3 ], [ 8, 1 ], [ 8, 1 ], [ 8, 1 ], [ 8, 1 ], [ 11, 3 ], [ 9, 3 ], [ 10, 3 ], [ 12, 3 ], [ 12, 3 ], [ 13, 3 ], [ 13, 4 ], [ 7, 2 ], [ 17, 3 ], [ 17, 2 ], [ 17, 2 ], [ 17, 1 ], [ 17, 1 ], [ 25, 2 ], [ 25, 1 ], [ 28, 1 ], [ 28, 1 ], [ 28, 1 ], [ 28, 1 ], [ 28, 1 ], [ 26, 1 ], [ 32, 2 ], [ 32, 1 ], [ 33, 3 ], [ 33, 3 ], [ 33, 3 ], [ 33, 3 ], [ 33, 3 ], [ 21, 1 ], [ 36, 3 ], [ 36, 1 ] ],
         performAction: function(t, n, r, i, s, o, u) {
             var a = o.length - 1;
@@ -4962,11 +4963,11 @@ OPEN_ENDBLOCK: 20,
                 this.$ = new i.ProgramNode(o[a]);
                 break;
               case 4:
-                this.$ = new i.ProgramNode([]);
+                this.$ = new 
+i.ProgramNode([]);
                 break;
               case 5:
-                this.$ = [ 
-o[a] ];
+                this.$ = [ o[a] ];
                 break;
               case 6:
                 o[a - 1].push(o[a]), this.$ = o[a - 1];
@@ -4993,11 +4994,11 @@ o[a] ];
                 this.$ = new i.MustacheNode(o[a - 1][0], o[a - 1][1]);
                 break;
               case 14:
-                this.$ = new i.MustacheNode(o[a - 1][0], o[a - 1][1]);
+                this.$ = new i.
+MustacheNode(o[a - 1][0], o[a - 1][1]);
                 break;
               case 15:
-                
-this.$ = o[a - 1];
+                this.$ = o[a - 1];
                 break;
               case 16:
                 this.$ = new i.MustacheNode(o[a - 1][0], o[a - 1][1]);
@@ -5023,11 +5024,11 @@ this.$ = o[a - 1];
                 this.$ = [ [ o[a - 1] ], o[a] ];
                 break;
               case 24:
-                this.$ = [ [ o[a] ], null ];
+                this.$ = 
+[ [ o[a] ], null ];
                 break;
               case 25:
-                this.$ = [ [ new i.DataNode
-(o[a]) ], null ];
+                this.$ = [ [ new i.DataNode(o[a]) ], null ];
                 break;
               case 26:
                 o[a - 1].push(o[a]), this.$ = o[a - 1];
@@ -5056,12 +5057,12 @@ this.$ = o[a - 1];
               case 34:
                 o[a - 1].push(o[a]), this.$ = o[a - 1];
                 break;
-              case 35:
+              case 35
+:
                 this.$ = [ o[a] ];
                 break;
               case 36:
-                this.
-$ = [ o[a - 2], o[a] ];
+                this.$ = [ o[a - 2], o[a] ];
                 break;
               case 37:
                 this.$ = [ o[a - 2], new i.StringNode(o[a]) ];
@@ -5092,12 +5093,12 @@ $ = [ o[a - 2], o[a] ];
             6: 3,
             8: 4,
             9: 5,
-            11: 6,
+            11
+: 6,
             12: 7,
             13: 8,
             14: [ 1, 9 ],
-            15: [ 1, 10 ]
-,
+            15: [ 1, 10 ],
             16: [ 1, 12 ],
             19: [ 1, 11 ],
             22: [ 1, 13 ],
@@ -5138,12 +5139,12 @@ $ = [ o[a - 2], o[a] ];
             6: 3,
             8: 4,
             9: 5,
-            11: 6,
+            11
+: 6,
             12: 7,
             13: 8,
             14: [ 1, 9 ],
-            15: 
-[ 1, 10 ],
+            15: [ 1, 10 ],
             16: [ 1, 12 ],
             19: [ 1, 11 ],
             20: [ 2, 4 ],
@@ -5181,12 +5182,12 @@ $ = [ o[a - 2], o[a] ];
             14: [ 2, 10 ],
             15: [ 2, 10 ],
             16: [ 2, 10 ],
-            19: [ 2, 10 ],
+            19: [ 2, 10 
+],
             20: [ 2, 10 ],
             22: [ 2, 10 ],
             23: [ 2, 10 ],
-            24
-: [ 2, 10 ]
+            24: [ 2, 10 ]
         }, {
             5: [ 2, 11 ],
             14: [ 2, 11 ],
@@ -5225,12 +5226,12 @@ $ = [ o[a - 2], o[a] ];
             27: [ 1, 24 ],
             34: [ 1, 26 ],
             36: 25
-        }, {
+        
+}, {
             17: 29,
             21: 23,
             27: [ 1, 24 ],
-            34: [ 1, 26 
-],
+            34: [ 1, 26 ],
             36: 25
         }, {
             21: 30,
@@ -5271,13 +5272,13 @@ $ = [ o[a - 2], o[a] ];
             36: 25
         }, {
             10: 33,
-            20: [ 1, 34 ]
+            20: [ 1, 34 
+]
         }, {
             10: 35,
             20: [ 1, 34 ]
         }, {
-            18: [ 1, 36 
-]
+            18: [ 1, 36 ]
         }, {
             18: [ 2, 24 ],
             21: 41,
@@ -5317,13 +5318,13 @@ $ = [ o[a - 2], o[a] ];
         }, {
             18: [ 1, 51 ]
         }, {
-            18: [ 1, 52 ],
+            18: 
+[ 1, 52 ],
             21: 53,
             34: [ 1, 26 ],
             36: 25
         }, {
-            5
-: [ 2, 2 ],
+            5: [ 2, 2 ],
             8: 18,
             9: 5,
             11: 6,
@@ -5361,12 +5362,12 @@ $ = [ o[a - 2], o[a] ];
             36: 25
         }, {
             5: [ 2, 8 ],
-            14: [ 2, 8 ],
+            14: 
+[ 2, 8 ],
             15: [ 2, 8 ],
             16: [ 2, 8 ],
             19: [ 2, 8 ],
-            20: 
-[ 2, 8 ],
+            20: [ 2, 8 ],
             22: [ 2, 8 ],
             23: [ 2, 8 ],
             24: [ 2, 8 ]
@@ -5404,13 +5405,13 @@ $ = [ o[a - 2], o[a] ];
         }, {
             18: [ 2, 33 ],
             33: 57,
-            34: [ 1, 58 ]
+            34: 
+[ 1, 58 ]
         }, {
             18: [ 2, 28 ],
             27: [ 2, 28 ],
             29: [ 2, 28 ],
-            30
-: [ 2, 28 ],
+            30: [ 2, 28 ],
             31: [ 2, 28 ],
             34: [ 2, 28 ]
         }, {
@@ -5446,12 +5447,12 @@ $ = [ o[a - 2], o[a] ];
             34: [ 2, 35 ]
         }, {
             18: [ 2, 43 ],
-            27: [ 2, 43 ],
+            27: 
+[ 2, 43 ],
             29: [ 2, 43 ],
             30: [ 2, 43 ],
             31: [ 2, 43 ],
-            34: [ 2, 43 ]
-,
+            34: [ 2, 43 ],
             35: [ 1, 59 ],
             37: [ 2, 43 ]
         }, {
@@ -5487,12 +5488,12 @@ $ = [ o[a - 2], o[a] ];
             24: [ 2, 17 ]
         }, {
             5: [ 2, 18 ],
-            14: [ 2, 18 ],
+            14: 
+[ 2, 18 ],
             15: [ 2, 18 ],
             16: [ 2, 18 ],
             19: [ 2, 18 ],
-            20: [ 2, 18 
-],
+            20: [ 2, 18 ],
             22: [ 2, 18 ],
             23: [ 2, 18 ],
             24: [ 2, 18 ]
@@ -5531,12 +5532,12 @@ $ = [ o[a - 2], o[a] ];
             34: [ 2, 42 ],
             37: [ 2, 42 ]
         }, {
-            5: [ 2, 19 ],
+            5
+: [ 2, 19 ],
             14: [ 2, 19 ],
             15: [ 2, 19 ],
             16: [ 2, 19 ],
-            19
-: [ 2, 19 ],
+            19: [ 2, 19 ],
             20: [ 2, 19 ],
             22: [ 2, 19 ],
             23: [ 2, 19 ],
@@ -5573,13 +5574,13 @@ $ = [ o[a - 2], o[a] ];
             38: [ 2, 23 ],
             55: [ 2, 21 ]
         },
-        parseError: function(t, n) {
+        parseError: function(t, n
+) {
             throw new Error(t);
         },
         parse: function(t) {
             function v(e) {
-                
-r.length = r.length - 2 * e, i.length = i.length - e, s.length = s.length - e;
+                r.length = r.length - 2 * e, i.length = i.length - e, s.length = s.length - e;
             }
             function m() {
                 var e;
@@ -5593,10 +5594,10 @@ r.length = r.length - 2 * e, i.length = i.length - e, s.length = s.length - e;
             typeof this.yy.parseError == "function" && (this.parseError = this.yy.parseError);
             var g, y, b, w, E, S, x = {}, T, N, C, k;
             for (;;) {
-                b = r[r.length - 1];
+                b = r[
+r.length - 1];
                 if (this.defaultActions[b]) w = this.defaultActions[b]; else {
-                    if (g === 
-null || typeof g == "undefined") g = m();
+                    if (g === null || typeof g == "undefined") g = m();
                     w = o[b] && o[b][g];
                 }
                 if (typeof w == "undefined" || !w.length || !w[0]) {
@@ -5607,12 +5608,12 @@ null || typeof g == "undefined") g = m();
                         this.lexer.showPosition ? L = "Parse error on line " + (a + 1) + ":\n" + this.lexer.showPosition() + "\nExpecting " + k.join(", ") + ", got '" + (this.terminals_[g] || g) + "'" : L = "Parse error on line " + (a + 1) + ": Unexpected " + (g == 1 ? "end of input" : "'" + (this.terminals_[g] || g) + "'"), this.parseError(L, {
                             text: this.lexer.match,
                             token: this.terminals_[g] || g,
-                            line: this.lexer.yylineno,
+                            line: this.lexer
+.yylineno,
                             loc: p,
                             expected: k
                         });
-                    
-}
+                    }
                 }
                 if (w[0] instanceof Array && w.length > 1) throw new Error("Parse Error: multiple actions possible at state: " + b + ", token: " + g);
                 switch (w[0]) {
@@ -5624,9 +5625,9 @@ null || typeof g == "undefined") g = m();
                         first_line: s[s.length - (N || 1)].first_line,
                         last_line: s[s.length - 1].last_line,
                         first_column: s[s.length - (N || 1)].first_column,
-                        last_column: s[s.length - 1].last_column
-                    }, d && (x._$.range = [ s[s.length - (N || 1)].range[0], s[s.length - 1].range[1] ]), S = this.performAction
-.call(x, u, f, a, this.yy, w[1], i, s);
+                        last_column: s[s.length - 1
+].last_column
+                    }, d && (x._$.range = [ s[s.length - (N || 1)].range[0], s[s.length - 1].range[1] ]), S = this.performAction.call(x, u, f, a, this.yy, w[1], i, s);
                     if (typeof S != "undefined") return S;
                     N && (r = r.slice(0, -1 * N * 2), i = i.slice(0, -1 * N), s = s.slice(0, -1 * N)), r.push(this.productions_[w[1]][0]), i.push(x.$), s.push(x._$), C = o[r[r.length - 2]][r[r.length - 1]], r.push(C);
                     break;
@@ -5644,10 +5645,10 @@ null || typeof g == "undefined") g = m();
                 this.yy.parser.parseError(t, n);
             },
             setInput: function(e) {
-                return this._input = e, this._more = this._less = this.done = !1, this.yylineno = this.yyleng = 0, this.yytext = this.matched = this.match = "", this.conditionStack = [ "INITIAL" ], this.yylloc = {
+                return this._input = e, this._more = this._less = this.done = !1, this.yylineno = this.yyleng = 0, this.yytext = this
+.matched = this.match = "", this.conditionStack = [ "INITIAL" ], this.yylloc = {
                     first_line: 1,
-                    first_column
-: 0,
+                    first_column: 0,
                     last_line: 1,
                     last_column: 0
                 }, this.options.ranges && (this.yylloc.range = [ 0, 0 ]), this.offset = 0, this;
@@ -5661,9 +5662,9 @@ null || typeof g == "undefined") g = m();
             unput: function(e) {
                 var t = e.length, n = e.split(/(?:\r\n?|\n)/g);
                 this._input = e + this._input, this.yytext = this.yytext.substr(0, this.yytext.length - t - 1), this.offset -= t;
-                var r = this.match.split(/(?:\r\n?|\n)/g);
-                this.match = this.match.substr(0, this.match.length - 1), this.matched = this.matched.substr
-(0, this.matched.length - 1), n.length - 1 && (this.yylineno -= n.length - 1);
+                
+var r = this.match.split(/(?:\r\n?|\n)/g);
+                this.match = this.match.substr(0, this.match.length - 1), this.matched = this.matched.substr(0, this.matched.length - 1), n.length - 1 && (this.yylineno -= n.length - 1);
                 var i = this.yylloc.range;
                 return this.yylloc = {
                     first_line: this.yylloc.first_line,
@@ -5679,9 +5680,9 @@ null || typeof g == "undefined") g = m();
                 this.unput(this.match.slice(e));
             },
             pastInput: function() {
-                var e = this.matched.substr(0, this.matched.length - this.match.length);
-                return (e.length > 20 ? "..." : "") + e.substr(-20).replace
-(/\n/g, "");
+                
+var e = this.matched.substr(0, this.matched.length - this.match.length);
+                return (e.length > 20 ? "..." : "") + e.substr(-20).replace(/\n/g, "");
             },
             upcomingInput: function() {
                 var e = this.match;
@@ -5698,11 +5699,11 @@ null || typeof g == "undefined") g = m();
                 this._more || (this.yytext = "", this.match = "");
                 var o = this._currentRules();
                 for (var u = 0; u < o.length; u++) {
-                    n = this._input.match(this.rules[o[u]]);
+                    n = this._input.match(this
+.rules[o[u]]);
                     if (n && (!t || n[0].length > t[0].length)) {
                         t = n, r = u;
-                        if (!
-this.options.flex) break;
+                        if (!this.options.flex) break;
                     }
                 }
                 if (t) {
@@ -5711,9 +5712,9 @@ this.options.flex) break;
                         last_line: this.yylineno + 1,
                         first_column: this.yylloc.last_column,
                         last_column: s ? s[s.length - 1].length - s[s.length - 1].match(/\r?\n?/)[0].length : this.yylloc.last_column + t[0].length
-                    }, this.yytext += t[0], this.match += t[0], this.matches = t, this.yyleng = this.yytext.length, this.options.ranges && (this.yylloc.range = [ this.offset, this.offset += this.yyleng ]), this._more = !1, this._input = this._input.slice(t[0].length), this.matched += t[0], e = this.performAction.call(this, this.yy, this, o[r], this.conditionStack[this.conditionStack.length - 1]), this.done && this._input && (this.done = !1);
-                    if (e) return e
-;
+                    }, this.yytext += t[0], this.match += t[0], this.matches = t, this.yyleng = this.yytext.length, this.options.ranges && (this.yylloc.range = [ this.offset, this.offset += this.yyleng ]), this._more = !1, this._input = this._input.slice(t[0].length), this.matched += t[0], e = this.performAction.call(this, this.yy, 
+this, o[r], this.conditionStack[this.conditionStack.length - 1]), this.done && this._input && (this.done = !1);
+                    if (e) return e;
                     return;
                 }
                 return this._input === "" ? this.EOF : this.parseError("Lexical error on line " + (this.yylineno + 1) + ". Unrecognized text.\n" + this.showPosition(), {
@@ -5735,11 +5736,11 @@ this.options.flex) break;
             _currentRules: function() {
                 return this.conditions[this.conditionStack[this.conditionStack.length - 1]].rules;
             },
-            topState: function() {
+            
+topState: function() {
                 return this.conditionStack[this.conditionStack.length - 2];
             },
-            pushState: function(
-t) {
+            pushState: function(t) {
                 this.begin(t);
             }
         };
@@ -5762,14 +5763,14 @@ t) {
                 return 20;
               case 6:
                 return 19;
-              case 7:
+              
+case 7:
                 return 19;
               case 8:
                 return 23;
               case 9:
                 return 23;
-              
-case 10:
+              case 10:
                 return n.yytext = n.yytext.substr(3, n.yyleng - 5), this.popState(), 15;
               case 11:
                 return 22;
@@ -5793,14 +5794,14 @@ case 10:
                 return n.yytext = n.yytext.substr(1, n.yyleng - 2).replace(/\\"/g, '"'), 29;
               case 21:
                 return n.yytext = n.yytext.substr(1), 27;
-              case 22:
+              
+case 22:
                 return 31;
               case 23:
                 return 31;
               case 24:
                 return 30;
-              
-case 25:
+              case 25:
                 return 34;
               case 26:
                 return n.yytext = n.yytext.substr(1, n.yyleng - 2), 34;
@@ -5811,10 +5812,10 @@ case 25:
             }
         }, e.rules = [ /^(?:[^\x00]*?(?=(\{\{)))/, /^(?:[^\x00]+)/, /^(?:[^\x00]{2,}?(?=(\{\{|$)))/, /^(?:\{\{>)/, /^(?:\{\{#)/, /^(?:\{\{\/)/, /^(?:\{\{\^)/, /^(?:\{\{\s*else\b)/, /^(?:\{\{\{)/, /^(?:\{\{&)/, /^(?:\{\{![\s\S]*?\}\})/, /^(?:\{\{)/, /^(?:=)/, /^(?:\.(?=[} ]))/, /^(?:\.\.)/, /^(?:[\/.])/, /^(?:\s+)/, /^(?:\}\}\})/, /^(?:\}\})/, /^(?:"(\\["]|[^"])*")/, /^(?:'(\\[']|[^'])*')/, /^(?:@[a-zA-Z]+)/, /^(?:true(?=[}\s]))/, /^(?:false(?=[}\s]))/, /^(?:[0-9]+(?=[}\s]))/, /^(?:[a-zA-Z0-9_$-]+(?=[=}\s\/.]))/, /^(?:\[[^\]]*\])/, /^(?:.)/, /^(?:$)/ ], e.conditions = {
             mu: {
-                rules: [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 ],
+                
+rules: [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28 ],
                 inclusive: !1
-            
-},
+            },
             emu: {
                 rules: [ 2 ],
                 inclusive: !1
@@ -5836,8 +5837,8 @@ typeof require != "undefined" && typeof exports != "undefined" && (exports.parse
     return typeof process != "undefined" ? n = require("fs").readFileSync(require("path").resolve(t[1]), "utf8") : n = require("file").path(require("file").cwd()).join(t[1]).read({
         charset: "utf-8"
     }), exports.parser.parse(n);
-}, typeof module != "undefined" && require.main === module && exports.main(typeof process != "undefined" ? process.argv.slice(1) : require("system").args)), Handlebars.Parser = e, Handlebars
-.parse = function(e) {
+}, typeof module != "undefined" && 
+require.main === module && exports.main(typeof process != "undefined" ? process.argv.slice(1) : require("system").args)), Handlebars.Parser = e, Handlebars.parse = function(e) {
     return Handlebars.Parser.yy = Handlebars.AST, Handlebars.Parser.parse(e);
 }, Handlebars.print = function(e) {
     return (new Handlebars.PrintVisitor).accept(e);
@@ -5857,12 +5858,12 @@ typeof require != "undefined" && typeof exports != "undefined" && (exports.parse
         this.type = "mustache", this.escaped = !n, this.hash = t;
         var r = this.id = e[0], i = this.params = e.slice(1), s = this.eligibleHelper = r.isSimple;
         this.isHelper = s && (i.length || t);
-    }, Handlebars.AST.PartialNode = function(e, t) {
+    
+}, Handlebars.AST.PartialNode = function(e, t) {
         this.type = "partial", this.id = e, this.context = t;
     };
     var e = function(e, t) {
-        
-if (e.original !== t.original) throw new Handlebars.Exception(e.original + " doesn't match " + t.original);
+        if (e.original !== t.original) throw new Handlebars.Exception(e.original + " doesn't match " + t.original);
     };
     Handlebars.AST.BlockNode = function(t, n, r, i) {
         e(t.id, i), this.type = "block", this.mustache = t, this.program = n, this.inverse = r, this.inverse && !this.program && (this.isInverse = !0);
@@ -5877,10 +5878,10 @@ if (e.original !== t.original) throw new Handlebars.Exception(e.original + " doe
             var s = e[r];
             s === ".." ? n++ : s === "." || s === "this" ? this.isScoped = !0 : t.push(s);
         }
-        this.parts = t, this.string = t.join("."), this.depth = n, this.isSimple = e.length === 1 && !this.isScoped && n === 0;
+        this.parts = t, this.string = 
+t.join("."), this.depth = n, this.isSimple = e.length === 1 && !this.isScoped && n === 0;
     }, Handlebars.AST.DataNode = function(e) {
-        this
-.type = "DATA", this.id = e;
+        this.type = "DATA", this.id = e;
     }, Handlebars.AST.StringNode = function(e) {
         this.type = "STRING", this.string = e;
     }, Handlebars.AST.IntegerNode = function(e) {
@@ -5899,15 +5900,15 @@ if (e.original !== t.original) throw new Handlebars.Exception(e.original + " doe
 }, Handlebars.SafeString.prototype.toString = function() {
     return this.string.toString();
 }, function() {
-    var e = {
+    var e = 
+{
         "&": "&amp;",
         "<": "&lt;",
         ">": "&gt;",
         '"': "&quot;",
         "'": "&#x27;",
         "`": "&#x60;"
-    }, t = /[&<>"'`]/g
-, n = /[&<>"'`]/, r = function(t) {
+    }, t = /[&<>"'`]/g, n = /[&<>"'`]/, r = function(t) {
         return e[t] || "&amp;";
     };
     Handlebars.Utils = {
@@ -5925,10 +5926,10 @@ if (e.original !== t.original) throw new Handlebars.Exception(e.original + " doe
             var e = this.opcodes, t, n = [], r, i;
             for (var s = 0, o = e.length; s < o; s++) {
                 t = e[s];
-                if (t.opcode === "DECLARE") n.push("DECLARE " + t.name + "=" + t.value); else {
+                if (t.opcode === "DECLARE"
+) n.push("DECLARE " + t.name + "=" + t.value); else {
                     r = [];
-                    for (var u = 0; u < t.args.length; u++) i = 
-t.args[u], typeof i == "string" && (i = '"' + i.replace("\n", "\\n") + '"'), r.push(i);
+                    for (var u = 0; u < t.args.length; u++) i = t.args[u], typeof i == "string" && (i = '"' + i.replace("\n", "\\n") + '"'), r.push(i);
                     n.push(t.opcode + " " + r.join(" "));
                 }
             }
@@ -5953,13 +5954,13 @@ t.args[u], typeof i == "string" && (i = '"' + i.replace("\n", "\\n") + '"'), r.p
             return this.program(e);
         },
         accept: function(e) {
-            return this[e.type](e);
+            return this
+[e.type](e);
         },
         program: function(e) {
             var t = e.statements, n;
             this.opcodes = [];
-            for (
-var r = 0, i = t.length; r < i; r++) n = t[r], this[n.type](n);
+            for (var r = 0, i = t.length; r < i; r++) n = t[r], this[n.type](n);
             return this.isSimple = i === 1, this.depths.list = this.depths.list.sort(function(e, t) {
                 return e - t;
             }), this;
@@ -5977,9 +5978,9 @@ var r = 0, i = t.length; r < i; r++) n = t[r], this[n.type](n);
         block: function(e) {
             var t = e.mustache, n = e.program, r = e.inverse;
             n && (n = this.compileProgram(n)), r && (r = this.compileProgram(r));
-            var i = this.classifyMustache(t);
-            i === "helper" ? this.helperMustache(t, n, r) : i === "simple" ? (this.simpleMustache(t), this.opcode("pushProgram"
-, n), this.opcode("pushProgram", r), this.opcode("pushLiteral", "{}"), this.opcode("blockValue")) : (this.ambiguousMustache(t, n, r), this.opcode("pushProgram", n), this.opcode("pushProgram", r), this.opcode("pushLiteral", "{}"), this.opcode("ambiguousBlockValue")), this.opcode("append");
+            var i = this
+.classifyMustache(t);
+            i === "helper" ? this.helperMustache(t, n, r) : i === "simple" ? (this.simpleMustache(t), this.opcode("pushProgram", n), this.opcode("pushProgram", r), this.opcode("pushLiteral", "{}"), this.opcode("blockValue")) : (this.ambiguousMustache(t, n, r), this.opcode("pushProgram", n), this.opcode("pushProgram", r), this.opcode("pushLiteral", "{}"), this.opcode("ambiguousBlockValue")), this.opcode("append");
         },
         hash: function(e) {
             var t = e.pairs, n, r;
@@ -5992,11 +5993,11 @@ var r = 0, i = t.length; r < i; r++) n = t[r], this[n.type](n);
         },
         content: function(e) {
             this.opcode("appendContent", e.string);
-        },
+        
+},
         mustache: function(e) {
             var t = this.options, n = this.classifyMustache(e);
-            n === "simple" ? this.simpleMustache
-(e) : n === "helper" ? this.helperMustache(e) : this.ambiguousMustache(e), e.escaped && !t.noEscape ? this.opcode("appendEscaped") : this.opcode("append");
+            n === "simple" ? this.simpleMustache(e) : n === "helper" ? this.helperMustache(e) : this.ambiguousMustache(e), e.escaped && !t.noEscape ? this.opcode("appendEscaped") : this.opcode("append");
         },
         ambiguousMustache: function(e, t, n) {
             var r = e.id, i = r.parts[0];
@@ -6008,9 +6009,9 @@ var r = 0, i = t.length; r < i; r++) n = t[r], this[n.type](n);
         },
         helperMustache: function(e, t, n) {
             var r = this.setupFullMustacheParams(e, t, n), i = e.id.parts[0];
-            if (this.options.knownHelpers[i]) this.opcode("invokeKnownHelper", r.length, i); else {
-                if (this.knownHelpersOnly) throw new Error("You specified knownHelpersOnly, but used the unknown helper " + 
-i);
+            if (this.options.knownHelpers
+[i]) this.opcode("invokeKnownHelper", r.length, i); else {
+                if (this.knownHelpersOnly) throw new Error("You specified knownHelpersOnly, but used the unknown helper " + i);
                 this.opcode("invokeHelper", r.length, i);
             }
         },
@@ -6032,15 +6033,15 @@ i);
         BOOLEAN: function(e) {
             this.opcode("pushLiteral", e.bool);
         },
-        comment: function() {},
+        comment: function(
+) {},
         opcode: function(e) {
             this.opcodes.push({
                 opcode: e,
                 args: [].slice.call(arguments, 1)
             });
         },
-        declare
-: function(e, t) {
+        declare: function(e, t) {
             this.opcodes.push({
                 opcode: "DECLARE",
                 name: e,
@@ -6062,10 +6063,10 @@ i);
         },
         pushParams: function(e) {
             var t = e.length, n;
-            while (t--) n = e[t], this.options.stringParams ? (n.depth && this.addDepth(n.depth), this.opcode("getContext", n.depth || 0), this.opcode("pushStringParam", n.string)) : this[n.type](n);
+            while (t--) n = e[t], this
+.options.stringParams ? (n.depth && this.addDepth(n.depth), this.opcode("getContext", n.depth || 0), this.opcode("pushStringParam", n.string)) : this[n.type](n);
         },
-        setupMustacheParams
-: function(e) {
+        setupMustacheParams: function(e) {
             var t = e.params;
             return this.pushParams(t), e.hash ? this.hash(e.hash) : this.opcode("pushLiteral", "{}"), t;
         },
@@ -6082,15 +6083,15 @@ i);
             return /^[0-9]+$/.test(n) ? e + "[" + n + "]" : t.isValidJavaScriptVariableName(n) ? e + "." + n : e + "['" + n + "']";
         },
         appendToBuffer: function(e) {
-            return this.environment.isSimple ? "return " + e + ";" : "buffer += " + e + ";";
+            return this.environment.isSimple ? "return " + e + ";" : "buffer += " + 
+e + ";";
         },
         initializeBuffer: function() {
             return this.quotedString("");
         },
         namespace: "Handlebars",
         compile: function(e, t, n, r) {
-            
-this.environment = e, this.options = t || {}, Handlebars.log(Handlebars.logger.DEBUG, this.environment.disassemble() + "\n\n"), this.name = this.environment.name, this.isChild = !!n, this.context = n || {
+            this.environment = e, this.options = t || {}, Handlebars.log(Handlebars.logger.DEBUG, this.environment.disassemble() + "\n\n"), this.name = this.environment.name, this.isChild = !!n, this.context = n || {
                 programs: [],
                 aliases: {}
             }, this.preamble(), this.stackSlot = 0, this.stackVars = [], this.registers = {
@@ -6102,7 +6103,8 @@ this.environment = e, this.options = t || {}, Handlebars.log(Handlebars.logger.D
             return this.createFunctionContext(r);
         },
         nextOpcode: function() {
-            var e = this.environment.opcodes, t = e[this.i + 1];
+            var e = this.environment.opcodes, t = e
+[this.i + 1];
             return e[this.i + 1];
         },
         eat: function(e) {
@@ -6110,8 +6112,7 @@ this.environment = e, this.options = t || {}, Handlebars.log(Handlebars.logger.D
         },
         preamble: function() {
             var e = [];
-            
-if (!this.isChild) {
+            if (!this.isChild) {
                 var t = this.namespace, n = "helpers = helpers || " + t + ".helpers;";
                 this.environment.usePartial && (n = n + " partials = partials || " + t + ".partials;"), this.options.data && (n += " data = data || {};"), e.push(n);
             } else e.push("");
@@ -6122,10 +6123,10 @@ if (!this.isChild) {
             t.length > 0 && (this.source[1] = this.source[1] + ", " + t.join(", "));
             if (!this.isChild) {
                 var n = [];
-                for (var r in this.context.aliases) this.source[1] = this.source[1] + ", " + r + "=" + this.context.aliases[r];
+                for (var r in this.context.aliases) this.source[1] = this.source[1] + ", " + 
+r + "=" + this.context.aliases[r];
             }
-            this.source[1] && (this.source[1] = "var " + this.source[1].substring(2) + ";"), this.isChild || (this.source[1] += "\n" + this.context
-.programs.join("\n") + "\n"), this.environment.isSimple || this.source.push("return buffer;");
+            this.source[1] && (this.source[1] = "var " + this.source[1].substring(2) + ";"), this.isChild || (this.source[1] += "\n" + this.context.programs.join("\n") + "\n"), this.environment.isSimple || this.source.push("return buffer;");
             var i = this.isChild ? [ "depth0", "data" ] : [ "Handlebars", "depth0", "helpers", "partials", "data" ];
             for (var s = 0, o = this.environment.depths.list.length; s < o; s++) i.push("depth" + this.environment.depths.list[s]);
             if (e) return i.push(this.source.join("\n  ")), Function.apply(this, i);
@@ -6135,12 +6136,12 @@ if (!this.isChild) {
         blockValue: function() {
             this.context.aliases.blockHelperMissing = "helpers.blockHelperMissing";
             var e = [ "depth0" ];
-            this.setupParams(0, e), this.replaceStack(function(t) {
+            this.setupParams
+(0, e), this.replaceStack(function(t) {
                 return e.splice(1, 0, t), t + " = blockHelperMissing.call(" + e.join(", ") + ")";
             });
         },
-        ambiguousBlockValue
-: function() {
+        ambiguousBlockValue: function() {
             this.context.aliases.blockHelperMissing = "helpers.blockHelperMissing";
             var e = [ "depth0" ];
             this.setupParams(0, e);
@@ -6155,9 +6156,9 @@ if (!this.isChild) {
             this.source.push("if(" + e + " || " + e + " === 0) { " + this.appendToBuffer(e) + " }"), this.environment.isSimple && this.source.push("else { " + this.appendToBuffer("''") + " }");
         },
         appendEscaped: function() {
-            var e = this.nextOpcode(), t = "";
-            this.context.aliases.escapeExpression = "this.escapeExpression", e && e.opcode === "appendContent" && (t = " + " + this.quotedString(e.args[0]), this.eat
-(e)), this.source.push(this.appendToBuffer("escapeExpression(" + this.popStack() + ")" + t));
+            var e = 
+this.nextOpcode(), t = "";
+            this.context.aliases.escapeExpression = "this.escapeExpression", e && e.opcode === "appendContent" && (t = " + " + this.quotedString(e.args[0]), this.eat(e)), this.source.push(this.appendToBuffer("escapeExpression(" + this.popStack() + ")" + t));
         },
         getContext: function(e) {
             this.lastContext !== e && (this.lastContext = e);
@@ -6175,12 +6176,12 @@ if (!this.isChild) {
         },
         lookup: function(e) {
             this.replaceStack(function(t) {
-                return t + " == null || " + t + " === false ? " + t + " : " + this.nameLookup(t, e, "context");
+                return t + " == null || " + 
+t + " === false ? " + t + " : " + this.nameLookup(t, e, "context");
             });
         },
         lookupData: function(e) {
-            this.pushStack(this.nameLookup("data", 
-e, "data"));
+            this.pushStack(this.nameLookup("data", e, "data"));
         },
         pushStringParam: function(e) {
             this.pushStackLiteral("depth" + this.lastContext), this.pushString(e);
@@ -6200,11 +6201,11 @@ e, "data"));
         invokeHelper: function(e, t) {
             this.context.aliases.helperMissing = "helpers.helperMissing";
             var n = this.lastHelper = this.setupHelper(e, t);
-            this.register("foundHelper", n.name), this.pushStack("foundHelper ? foundHelper.call(" + n.callParams + ") " + ": helperMissing.call(" + n.helperMissingParams + ")");
+            this.register("foundHelper", n.name), this.pushStack("foundHelper ? foundHelper.call(" + 
+n.callParams + ") " + ": helperMissing.call(" + n.helperMissingParams + ")");
         },
         invokeKnownHelper: function(e, t) {
-            var n = this.setupHelper
-(e, t);
+            var n = this.setupHelper(e, t);
             this.pushStack(n.name + ".call(" + n.callParams + ")");
         },
         invokeAmbiguous: function(e) {
@@ -6215,9 +6216,9 @@ e, "data"));
             this.source.push("if (foundHelper) { " + i + " = foundHelper.call(" + t.callParams + "); }"), this.source.push("else { " + i + " = " + r + "; " + i + " = typeof " + i + " === functionType ? " + i + "() : " + i + "; }");
         },
         invokePartial: function(e) {
-            var t = [ this.nameLookup("partials", e, "partial"), "'" + e + "'", this.popStack(), "helpers", "partials" ];
-            this.options.data && t.push("data"), this.context.aliases.self = "this", this.pushStack("self.invokePartial(" + t.join
-(", ") + ");");
+            var t = [ this.nameLookup("partials", e, "partial"), "'" + e + "'", this
+.popStack(), "helpers", "partials" ];
+            this.options.data && t.push("data"), this.context.aliases.self = "this", this.pushStack("self.invokePartial(" + t.join(", ") + ");");
         },
         assignToHash: function(e) {
             var t = this.popStack(), n = this.topStack();
@@ -6235,10 +6236,10 @@ e, "data"));
         programExpression: function(e) {
             this.context.aliases.self = "this";
             if (e == null) return "self.noop";
-            var t = this.environment.children[e], n = t.depths.list, r, i = [ t.index, t.name, "data" ];
+            var t = this.environment.children[e], n = t.depths.list, r, i = 
+[ t.index, t.name, "data" ];
             for (var s = 0, o = n.length; s < o; s++) r = n[s], r === 1 ? i.push("depth0") : i.push("depth" + (r - 1));
-            return n
-.length === 0 ? "self.program(" + i.join(", ") + ")" : (i.shift(), "self.programWithDepth(" + i.join(", ") + ")");
+            return n.length === 0 ? "self.program(" + i.join(", ") + ")" : (i.shift(), "self.programWithDepth(" + i.join(", ") + ")");
         },
         register: function(e, t) {
             this.useRegister(e), this.source.push(e + " = " + t + ";");
@@ -6254,12 +6255,12 @@ e, "data"));
         },
         replaceStack: function(e) {
             var t = e.call(this, this.topStack());
-            return this.source.push(this.topStack() + " = " + t + ";"), "stack" + this.stackSlot;
+            return this.source.push(this.topStack() + " = " + t + ";"
+), "stack" + this.stackSlot;
         },
         nextStack: function(e) {
             var t = this.incrStack();
-            return this.compileStack.push("stack" + this
-.stackSlot), t;
+            return this.compileStack.push("stack" + this.stackSlot), t;
         },
         incrStack: function() {
             return this.stackSlot++, this.stackSlot > this.stackVars.length && this.stackVars.push("stack" + this.stackSlot), "stack" + this.stackSlot;
@@ -6278,13 +6279,13 @@ e, "data"));
         setupHelper: function(e, t) {
             var n = [];
             this.setupParams(e, n);
-            var r = this.nameLookup("helpers", t, "helper");
+            var r = this.nameLookup
+("helpers", t, "helper");
             return {
                 params: n,
                 name: r,
                 callParams: [ "depth0" ].concat(n).join(", "),
-                
-helperMissingParams: [ "depth0", this.quotedString(t) ].concat(n).join(", ")
+                helperMissingParams: [ "depth0", this.quotedString(t) ].concat(n).join(", ")
             };
         },
         setupParams: function(e, t) {
