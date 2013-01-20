@@ -13,7 +13,6 @@ define(function (require) {
     var cPiccadilly = 'rgb(35, 76, 166)'
     var cJubilee = 'rgb(123, 132, 143)'
     var cWhite = 'rgb(225,223,214)'
-    var footerHeight = 60
     var paintOdds = 0.1
 
     // odds = 1 is always true
@@ -42,9 +41,11 @@ define(function (require) {
     var getDimenstions = function () {
 
       var w = $win.width()
+      var smallDevice = w < 1024
+      var footerHeight = smallDevice ? 30 : 60
       var h = $win.height() - footerHeight
 
-      var side = w < 1024 ? 4 : 9
+      var side = smallDevice ? 4 : 9
       var gap = 2
       var cell = side + gap
 
@@ -54,6 +55,7 @@ define(function (require) {
         side: side,
         gap: gap,
         cell: cell,
+        footerHeight: footerHeight,
         toString: function () {
           return w + 'px * ' + h + 'px'
         }
