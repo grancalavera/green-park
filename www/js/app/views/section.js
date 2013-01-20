@@ -4,58 +4,66 @@ define(function (require) {
 
     'use strict';
 
-    var $ = require('jquery');
-    var Backbone = require('backbone');
-    var _ = require('underscore');
-    var map = require('app/utils/map');
+    var $ = require('jquery')
+    var Backbone = require('backbone')
+    var _ = require('underscore')
+    var map = require('app/utils/map')
 
-    var $win = $(window);
-    var cPiccadilly = 'rgb(35, 76, 166)';
-    var cJubilee = 'rgb(123, 132, 143)';
-    var cWhite = 'rgb(225,223,214)';
-    var side = 9;
-    var gap = 2;
-    var cell = side + gap;
-    var footerHeight = 60;
-    var paintOdds = 0.1;
+    var $win = $(window)
+    var cPiccadilly = 'rgb(35, 76, 166)'
+    var cJubilee = 'rgb(123, 132, 143)'
+    var cWhite = 'rgb(225,223,214)'
+    var footerHeight = 60
+    var paintOdds = 0.1
 
     // odds = 1 is always true
     // odds = 0 is always false
     function biasedCoin(odds) {
       return function () {
         if (odds === 0) {
-          return false;
+          return false
         }
-        return Math.random() <= odds ? true : false;
-      };
+        return Math.random() <= odds ? true : false
+      }
     }
 
-    var paintTile = biasedCoin(paintOdds);
+    var paintTile = biasedCoin(paintOdds)
 
     var translate = function ($el, dir, animated) {
-      var distance = $win.width() * dir;
+      var distance = $win.width() * dir
       if (animated) {
-        $el.addClass('animated');
+        $el.addClass('animated')
       } else {
-        $el.removeClass('animated');
+        $el.removeClass('animated')
       }
-      $el.css('transform', 'translateX(' + distance + 'px)');
-    };
+      $el.css('transform', 'translateX(' + distance + 'px)')
+    }
 
     var getDimenstions = function () {
-      var w = $win.width(), h = $win.height() - footerHeight, d = {
+
+      var w = $win.width()
+      var h = $win.height() - footerHeight
+
+      var side = w < 1024 ? 4 : 9
+      var gap = 2
+      var cell = side + gap
+
+      var d = {
         width: w,
         height: h,
+        side: side,
+        gap: gap,
+        cell: cell,
         toString: function () {
-          return w + 'px * ' + h + 'px';
+          return w + 'px * ' + h + 'px'
         }
-      };
-      return d;
-    };
+      }
+      return d
+    }
 
     var defaultNumber = function (value, def) {
-      return _.isNumber(value) ? value : def;
-    };
+      return _.isNumber(value) ? value : def
+    }
 
     //--------------------------------------------------------------------------
     //
@@ -75,7 +83,7 @@ define(function (require) {
       //
       //----------------------------------
 
-      template: function () { return ''; },
+      template: function () { return '' },
 
       //----------------------------------
       //
@@ -85,22 +93,22 @@ define(function (require) {
 
       tagName: 'section',
       render: function() {
-        var dimensions = getDimenstions();
+        var dimensions = getDimenstions()
         if (this.dimensions.toString() !== dimensions.toString()) {
-          this.dimensions = dimensions;
-          this.renderingContext = this.getRenderingContext();
-          this.$el.html(this.template(this.renderingContext));
-          this.draw();
+          this.dimensions = dimensions
+          this.renderingContext = this.getRenderingContext()
+          this.$el.html(this.template(this.renderingContext))
+          this.draw()
         }
-        return this;
+        return this
       },
 
       showPlatforms: function () {
-        this.$('.platform').fadeIn();
+        this.$('.platform').fadeIn()
       },
 
       hidePlatforms: function () {
-        this.$('.platform').fadeOut();
+        this.$('.platform').fadeOut()
       },
 
       //----------------------------------
@@ -109,88 +117,93 @@ define(function (require) {
       //
       //----------------------------------
       getTiles: function (cols, rows, hOff, vOff, from, to) {
+        var cell = this.dimensions.cell
+        var side = this.dimensions.side
         return _.reduce(_.range(0, cols), function (ts, cIndex, cIndex2, cs) {
                   var col = _.reduce(_.range(0, rows), function (cl, rIndex, rIndex2, rw) {
-                    var odds;
-                    var mapped;
+                    var odds
+                    var mapped
                     var tile = {
                       x: cIndex * cell + hOff,
                       y: rIndex * cell + vOff,
                       w: side,
                       h: side,
                       s: cWhite
-                    };
+                    }
                     if (paintTile()) {
                       // for jubilee
-                      odds = cIndex / (cs.length  - 1);
-                      mapped = map(odds, 0, 1, from, to);
-                      tile.s = biasedCoin(mapped)() ? cJubilee : cPiccadilly;
+                      odds = cIndex / (cs.length  - 1)
+                      mapped = map(odds, 0, 1, from, to)
+                      tile.s = biasedCoin(mapped)() ? cJubilee : cPiccadilly
                     }
-                    cl.push(tile);
-                    return cl;
-                  }, []);
-                  return ts.concat(col);
-                }, []);
+                    cl.push(tile)
+                    return cl
+                  }, [])
+                  return ts.concat(col)
+                }, [])
       },
       drawTile: function (ctx, tile) {
-        ctx.fillStyle = tile.s;
-        ctx.fillRect (tile.x, tile.y, tile.w, tile.h);
+        ctx.fillStyle = tile.s
+        ctx.fillRect (tile.x, tile.y, tile.w, tile.h)
       },
       drawCanvas: function (canvas, tiles) {
-        var ctx = canvas.getContext('2d');
+        var ctx = canvas.getContext('2d')
         if(ctx) {
           _.each(tiles, function (tile) {
-            this.drawTile(ctx, tile);
-          }, this);
+            this.drawTile(ctx, tile)
+          }, this)
         }
       },
       draw: function (){
-        throw(new Error('Section.draw: draw() must be implemented in a sub-module.'));
+        throw(new Error('Section.draw: draw() must be implemented in a sub-module.'))
       },
       getRenderingContextAdditions: function () {
-        throw(new Error('Section.getRenderingContextAdditions: getRenderingContextAdditions() must be implemented in a sub-module.'));
+        throw(new Error('Section.getRenderingContextAdditions: getRenderingContextAdditions() must be implemented in a sub-module.'))
       },
       getRenderingContext: function () {
 
-        var width, height, cols, rows, hOff, vOff, tiles = [];
-        var from = defaultNumber(this.options.from, 0);
-        var to = defaultNumber(this.options.to, 1);
+        var width, height, cols, rows, hOff, vOff, tiles = []
+        var from = defaultNumber(this.options.from, 0)
+        var to = defaultNumber(this.options.to, 1)
+        var cell = this.dimensions.cell
+        var side = this.dimensions.side
 
         var rctx = {
           width: this.dimensions.width,
           height: this.dimensions.height
-        };
+        }
 
-        rctx = _.extend(rctx, this.getRenderingContextAdditions());
+        rctx = _.extend(rctx, this.getRenderingContextAdditions())
 
-        width = rctx.width;
-        height = rctx.height;
-        cols = Math.floor(width / cell);
-        rows = Math.floor(height / cell);
-        hOff = Math.floor((width - (cell * cols)) / 2);
-        vOff = Math.floor((height - (cell * rows)) / 2);
+        width = rctx.width
+        height = rctx.height
+
+        cols = Math.floor(width / cell)
+        rows = Math.floor(height / cell)
+        hOff = Math.floor((width - (cell * cols)) / 2)
+        vOff = Math.floor((height - (cell * rows)) / 2)
 
         if (rctx.isStart) {
-          tiles.push(this.getTiles(cols, rows, hOff, vOff, 1, 1));
-          tiles.push(this.getTiles(cols, rows, hOff, vOff, 0, 0));
+          tiles.push(this.getTiles(cols, rows, hOff, vOff, 1, 1))
+          tiles.push(this.getTiles(cols, rows, hOff, vOff, 0, 0))
         } else {
-          tiles.push(this.getTiles(cols, rows, hOff, vOff, from, to));
+          tiles.push(this.getTiles(cols, rows, hOff, vOff, from, to))
         }
 
 
-        rctx.tiles = tiles;
-        return rctx;
+        rctx.tiles = tiles
+        return rctx
       },
       toPiccadilly: function (animated) {
-        translate(this.$el, -1, animated);
+        translate(this.$el, -1, animated)
       },
 
       toJubilee: function (animated) {
-        translate(this.$el, 1, animated);
+        translate(this.$el, 1, animated)
       },
 
       toCenter: function (animated) {
-        translate(this.$el, 0, animated);
+        translate(this.$el, 0, animated)
       },
 
       //----------------------------------
@@ -200,9 +213,9 @@ define(function (require) {
       //----------------------------------
 
       toString: function () {
-        return this.viewId;
+        return this.viewId
       }
 
-    });
-});
+    })
+})
 

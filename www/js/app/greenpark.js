@@ -81,9 +81,11 @@ define(function (require) {
         this.walk.piccadilly.$el.removeClass('center');
         this.walk.center.$el.addClass('center');
         this.walk.jubilee.$el.removeClass('center');
+
         this.walk.piccadilly.toPiccadilly();
         this.walk.center.toCenter();
         this.walk.jubilee.toJubilee();
+
         this.walk.piccadilly.render();
         this.walk.center.render();
         this.walk.jubilee.render();
