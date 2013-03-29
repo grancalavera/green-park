@@ -3,7 +3,7 @@
 define(function (require) {
 
     'use strict';
-
+    var failedTiles = 0;
     var $ = require('jquery')
     var Backbone = require('backbone')
     var _ = require('underscore')
@@ -75,17 +75,17 @@ define(function (require) {
 
     return Backbone.View.extend({
 
+      //----------------------------------
+      //
+      // Setup
+      //
+      //----------------------------------
+
       viewId: 'app/views/section',
       dimensions: {},
       renderingContext: {},
-
-      //----------------------------------
-      //
-      // State
-      //
-      //----------------------------------
-
       template: function () { return '' },
+      tagName: 'section',
 
       //----------------------------------
       //
@@ -93,11 +93,16 @@ define(function (require) {
       //
       //----------------------------------
 
-      tagName: 'section',
       render: function() {
         var dimensions = getDimenstions()
         if (this.dimensions.toString() !== dimensions.toString()) {
           this.dimensions = dimensions
+          ;delete this.$canvases
+          if (this.pendingDraw) {
+            console.log(this.pendingDraw)
+            clearTimeout(this.pendingDraw)
+            ;delete this.pendingDraw
+          }
           this.renderingContext = this.getRenderingContext()
           this.$el.html(this.template(this.renderingContext))
           this.draw()
@@ -105,19 +110,17 @@ define(function (require) {
         return this
       },
 
-      showPlatforms: function () {
-        this.$('.platform').fadeIn()
-      },
-
-      hidePlatforms: function () {
-        this.$('.platform').fadeOut()
-      },
-
       //----------------------------------
       //
       // Section stuff
       //
       //----------------------------------
+      getCanvas: function () {
+        if (!this.$canvases) {
+          this.$canvases = this.$('canvas');
+        }
+        return this.$canvases;
+      },
       getTiles: function (cols, rows, hOff, vOff, from, to) {
         var cell = this.dimensions.cell
         var side = this.dimensions.side
@@ -130,7 +133,10 @@ define(function (require) {
                       y: rIndex * cell + vOff,
                       w: side,
                       h: side,
-                      s: cWhite
+                      s: cWhite,
+                      toString: function () {
+                        return this.x + ' - ' + this. y + ' - ' + this.s
+                      }
                     }
                     if (paintTile()) {
                       // for jubilee
@@ -150,10 +156,11 @@ define(function (require) {
       },
       drawCanvas: function (canvas, tiles) {
         var ctx = canvas.getContext('2d')
-        if(ctx) {
+        var self = this;
+        if (ctx) {
           _.each(tiles, function (tile) {
-            this.drawTile(ctx, tile)
-          }, this)
+            self.drawTile(ctx, tile)
+          })
         }
       },
       draw: function (){
@@ -162,38 +169,18 @@ define(function (require) {
       getRenderingContextAdditions: function () {
         throw(new Error('Section.getRenderingContextAdditions: getRenderingContextAdditions() must be implemented in a sub-module.'))
       },
-      getRenderingContext: function () {
-
-        var width, height, cols, rows, hOff, vOff, tiles = []
-        var from = defaultNumber(this.options.from, 0)
-        var to = defaultNumber(this.options.to, 1)
+      getRenderingContext: function (width) {
         var cell = this.dimensions.cell
-        var side = this.dimensions.side
-
         var rctx = {
-          width: this.dimensions.width,
+          width: width || this.dimensions.width,
           height: this.dimensions.height
         }
-
-        rctx = _.extend(rctx, this.getRenderingContextAdditions())
-
-        width = rctx.width
-        height = rctx.height
-
-        cols = Math.floor(width / cell)
-        rows = Math.floor(height / cell)
-        hOff = Math.floor((width - (cell * cols)) / 2)
-        vOff = Math.floor((height - (cell * rows)) / 2)
-
-        if (rctx.isStart) {
-          tiles.push(this.getTiles(cols, rows, hOff, vOff, 1, 1))
-          tiles.push(this.getTiles(cols, rows, hOff, vOff, 0, 0))
-        } else {
-          tiles.push(this.getTiles(cols, rows, hOff, vOff, from, to))
-        }
-
-
-        rctx.tiles = tiles
+        rctx.from = defaultNumber(this.options.from, 0)
+        rctx.to = defaultNumber(this.options.to, 1)
+        rctx.cols = Math.floor(rctx.width / cell)
+        rctx.rows = Math.floor(rctx.height / cell)
+        rctx.hOff = Math.floor((rctx.width - (cell * rctx.cols)) / 2)
+        rctx.vOff = Math.floor((rctx.height - (cell * rctx.rows)) / 2)
         return rctx
       },
       toPiccadilly: function (animated) {

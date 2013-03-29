@@ -15,17 +15,20 @@ define(function (require) {
     //--------------------------------------------------------------------------
 
     var Walk = function (scrollPos, sections) {
-        this.scrollPos = scrollPos;
-        this.sections = sections;
-        this.positions = this.sections.positions(scrollPos);
-        this.next = this.sections.next(scrollPos);
-        this.prev = this.sections.prev(scrollPos);
+
+        this.scrollPos  = scrollPos;
+        this.sections   = sections;
+
+        this.positions  = this.sections.positions(scrollPos);
+        this.next       = this.sections.next(scrollPos);
+        this.prev       = this.sections.prev(scrollPos);
+
         this.piccadilly = this.sections.getSection(this.positions[0]);
-        this.center = this.sections.getSection(this.positions[1]);
-        this.jubilee = this.sections.getSection(this.positions[2]);
+        this.center     = this.sections.getSection(this.positions[1]);
+        this.jubilee    = this.sections.getSection(this.positions[2]);
     }
 
-    Walk.prototype = {
+     Walk.prototype = {
         // Same as 'walk right'
         toPiccadilly: function () {
           return new Walk(this.prev, this.sections);

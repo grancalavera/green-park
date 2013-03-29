@@ -4,9 +4,9 @@ define(function (require) {
 
     'use strict';
 
-    var $ = require('jquery');
-    var _ = require('underscore');
-    var Section = require('app/views/section');
+    var $ = require('jquery')
+    var _ = require('underscore')
+    var Section = require('app/views/section')
 
     //--------------------------------------------------------------------------
     //
@@ -32,20 +32,20 @@ define(function (require) {
       //
       //----------------------------------
 
-      getRenderingContextAdditions: function () {
-        var width = this.dimensions.width < 1024 ? 90 : 200;
-        var additions = {
-          width: width,
-          isStart: true
-        };
-        return additions;
+      getRenderingContext: function () {
+        var width = this.dimensions.width < 1024 ? 90 : 200
+        var rctx = Section.prototype.getRenderingContext.call(this, width)
+        rctx.tiles = [
+          this.getTiles(rctx.cols, rctx.rows, rctx.hOff, rctx.vOff, 1, 1),
+          this.getTiles(rctx.cols, rctx.rows, rctx.hOff, rctx.vOff, 0, 0)
+        ]
+        return rctx
       },
 
       draw: function () {
-        var canvases = this.$('canvas');
-        this.drawCanvas(canvases[0], this.renderingContext.tiles[0]);
-        this.drawCanvas(canvases[1], this.renderingContext.tiles[1]);
+        this.drawCanvas(this.getCanvas()[0], this.renderingContext.tiles[0])
+        this.drawCanvas(this.getCanvas()[1], this.renderingContext.tiles[1])
       }
 
-    });
-});
+    })
+})

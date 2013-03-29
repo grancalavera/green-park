@@ -7,6 +7,7 @@ define(function (require) {
 
     var $ = require('jquery');
     var _ = require('underscore');
+    // Views
     var Start = require('app/views/start');
     var Tunnel = require('app/views/tunnel');
 
@@ -23,20 +24,14 @@ define(function (require) {
     //----------------------------------
 
     var Sections = function (count) {
-        var edgeCount, edgeRange, edges;
-
-        if (_.isNumber(count) && (count >= 3)) {
-          this.count = count;
-        } else {
-          this.count = 3;
-        }
-
-        edgeCount = (this.count - 1) * 2;
-        edgeRange = _.range(0, edgeCount);
-        this.edges = _.reduce(edgeRange, function (accumulator, i) {
-          accumulator.push(i / (edgeCount - 1));
-          return accumulator;
-        }, []);
+      var validCount = _.isNumber(count) && (count >= 3);
+      this.count = validCount ? count : 3;
+      var edgeCount = (this.count - 1) * 2;
+      var edgeRange = _.range(0, edgeCount);
+      this.edges = _.reduce(edgeRange, function (edges, i) {
+        edges.push(i / (edgeCount - 1));
+        return edges;
+      }, []);
     }
 
     Sections.prototype = {
@@ -52,12 +47,10 @@ define(function (require) {
         if (index === 0) {
           section = new Start();
         } else {
-
           fromEdge = (index - 1) * 2;
           toEdge = fromEdge + 1;
           from = this.edges[fromEdge];
           to = this.edges[toEdge];
-
           section = new Tunnel({
             from: from,
             to: to
