@@ -1,7 +1,6 @@
 // Main application controller
 // leoncoto@gmail.com
 define(function (require) {
-
     'use strict';
 
     var $ = require('jquery');
@@ -15,7 +14,7 @@ define(function (require) {
       'transitionend',
       'webkitTransitionEnd'
     ].join(' ');
-    var isTouch = Modernizr.touch;
+
     var $win = $(window);
     var $doc = $(document);
     var container = '#green-park';
@@ -45,7 +44,7 @@ define(function (require) {
         this.appendAll();
         this.updateLayout();
         var updateLayout = _.bind(_.debounce(this.updateLayout, 100), this);
-        if (isTouch) {
+        if (Modernizr.touch) {
           $win.on('orientationchange', updateLayout);
         } else {
           $win.on('resize', updateLayout);
@@ -122,5 +121,5 @@ define(function (require) {
 
     });
 
-    var greenPark = new GreenPark({});
+    new GreenPark();
 });
