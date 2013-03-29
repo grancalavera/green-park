@@ -22,11 +22,7 @@ define(function (require) {
     //
     //----------------------------------
 
-    var sectionsPrototype = {
-      sections: [],
-      edges: [],
-      count: 3,
-      init: function (count) {
+    var Sections = function (count) {
         var edgeCount, edgeRange, edges;
 
         if (_.isNumber(count) && (count >= 3)) {
@@ -41,9 +37,12 @@ define(function (require) {
           accumulator.push(i / (edgeCount - 1));
           return accumulator;
         }, []);
+    }
 
-        return this;
-      },
+    Sections.prototype = {
+      sections: [],
+      edges: [],
+      count: 3,
       getSection: function (index) {
         var section = this.sections[index];
         var from, to, fromEdge, toEdge;
@@ -86,26 +85,11 @@ define(function (require) {
       positions: function (scrollPos) {
         return [this.prev(scrollPos), scrollPos, this.next(scrollPos)];
       }
-    };
+    }
 
-    //--------------------------------------------------------------------------
-    //
-    // Constructors
-    //
-    //--------------------------------------------------------------------------
-
-    var createSections = function (count) {
-      return _.extend({}, sectionsPrototype).init(count);
-    };
-
-    //--------------------------------------------------------------------------
-    //
-    // Module exports
-    //
-    //--------------------------------------------------------------------------
     return {
       create: function (count) {
-        return createSections(count);
+        return new Sections(count);
       }
     };
 
